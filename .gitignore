@@ -46,6 +46,7 @@ coverage.xml
 coverage.json
 *.cover
 .hypothesis/
+test-report.xml
 
 # Translations
 *.mo
@@ -61,6 +62,8 @@ instance/
 
 # Scrapy stuff:
 .scrapy
+dbs/
+logs/
 
 # Sphinx documentation
 docs/_build/
@@ -120,8 +123,6 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
-.now
-.vercel
 
-# PGP
-*.asc
+# Vercel
+.vercel
