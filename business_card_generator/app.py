@@ -1,6 +1,8 @@
 from typing import Optional
 from fastapi import FastAPI
 
+from . import __about__
+
 
 def create_app(env_file: Optional[str] = ".env") -> FastAPI:
     from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
@@ -11,9 +13,9 @@ def create_app(env_file: Optional[str] = ".env") -> FastAPI:
     settings = Settings(_env_file=env_file)  # type: ignore
 
     app = FastAPI(
-        title=settings.app_name,
-        description=settings.app_description,
-        version=settings.app_version,
+        title=__about__.__name__,
+        description=__about__.__description__,
+        version=__about__.__version__,
     )
     app.state.settings = settings
 
