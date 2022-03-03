@@ -12,6 +12,6 @@ router = APIRouter()
     summary="Generate business card",
     description="Generate business card",
 )
-def get_card(params: CardParams = Depends(CardParams)) -> StreamingResponse:
+def get_card(params: CardParams = Depends()) -> StreamingResponse:
     card = create_card(params)
     return StreamingResponse(content=card.image, media_type=card.mimetype)

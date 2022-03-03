@@ -11,6 +11,7 @@ from segno import QRCode, helpers
 
 class CardKind(str, Enum):
     mecard = "mecard"
+    vcard = "vcard"
 
 
 class CardFormat(str, Enum):
@@ -57,9 +58,27 @@ def create_mecard(params: CardParams) -> QRCode:
     )
 
 
+def create_vcard(params: CardParams) -> QRCode:
+    return helpers.make_vcard(
+        name=params.name,
+        displayname=params.name,
+        email=params.email,
+        phone=params.phone,
+        memo=params.title,
+        nickname=params.nickname,
+        birthday=params.birthday,
+        street=params.street,
+        city=params.city,
+        region=params.state,
+        zipcode=params.zipcode,
+        country=params.country,
+    )
+
+
 def create_card(params: CardParams) -> Card:
     factories = {
         CardKind.mecard: create_mecard,
+        CardKind.vcard: create_vcard,
     }
     qrcode = factories[params.kind](params)
 
