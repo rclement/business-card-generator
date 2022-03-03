@@ -32,11 +32,10 @@ jobs:
         run: |
           pipenv run inv qa
           pipenv run coverage xml
-      # - name: Publish code coverage to Codecov
-      #   uses: codecov/codecov-action@v2
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     file: ./coverage.xml
+      - name: Publish code coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          files: ./coverage.xml
 
   deploy-vercel-setup:
     name: Deployment setup
