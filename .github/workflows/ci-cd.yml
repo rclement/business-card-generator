@@ -41,7 +41,7 @@ jobs:
   deploy-vercel-setup:
     name: Deployment setup
     runs-on: ubuntu-latest
-    needs: build-docker
+    needs: test
 
     outputs:
       github_ref_slug: ${{ steps.output_step.outputs.github_ref_slug }}
