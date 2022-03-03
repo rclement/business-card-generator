@@ -1,1 +1,1 @@
-web: gunicorn --name=business-card-generator --worker-class=uvicorn.workers.UvicornWorker --access-logfile=- --error-logfile=- --forwarded-allow-ips="*" 'business_card_generator.app:create_app()'
+web: gunicorn --name=business-card-generator --worker-class=uvicorn.workers.UvicornWorker --access-logfile=- --error-logfile=- --forwarded-allow-ips="*" business_card_generator.asgi:app

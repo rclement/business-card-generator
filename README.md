@@ -8,6 +8,8 @@ This software allows to generate digital QR-code business cards:
 - [MeCard](https://en.wikipedia.org/wiki/MeCard_(QR_code))
 - [vCard](https://en.wikipedia.org/wiki/VCard)
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/rclement/business-card-generator)
+
 ## Development
 
 ### Python
