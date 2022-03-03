@@ -1,3 +1,5 @@
+![Banner QR Card](https://business-card-generator.vercel.app/api/card?name=John%20Doe&format=png)
+
 # Business Card Generator
 
 Everyone needs a business card. Or multiple ones. Or in multiple formats.
@@ -9,6 +11,7 @@ This software allows to generate digital QR-code business cards:
 - [vCard](https://en.wikipedia.org/wiki/VCard)
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/rclement/business-card-generator)
+[![Deploy with Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/rclement/business-card-generator)
 
 ## Development
 
