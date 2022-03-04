@@ -13,7 +13,7 @@ segno = "==1.4.1"
 uvicorn = "==0.17.5"
 
 [dev-packages]
-bandit = "==1.7.3"
+bandit = "==1.7.4"
 black = "==22.1.0"
 faker = "==13.3.0"
 flake8 = "==4.0.1"
