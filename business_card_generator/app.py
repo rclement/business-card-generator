@@ -7,7 +7,7 @@ from . import __about__
 def create_app(env_file: Optional[str] = ".env") -> FastAPI:
     from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
     from fastapi.middleware.cors import CORSMiddleware
-    from . import api
+    from . import api, views
     from .settings import Settings
 
     settings = Settings(_env_file=env_file)  # type: ignore
@@ -30,6 +30,7 @@ def create_app(env_file: Optional[str] = ".env") -> FastAPI:
         allow_headers=["*"],
     )
 
+    app.include_router(views.router, prefix="")
     app.include_router(api.router, prefix="/api")
 
     return app

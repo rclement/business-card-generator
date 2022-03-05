@@ -25,9 +25,9 @@ def test_app_urls(app: FastAPI) -> None:
 # ------------------------------------------------------------------------------
 
 
-def test_get_docs_https_redirect(
+def test_get_home_https_redirect(
     enable_force_https: None, app_client: TestClient
 ) -> None:
-    response = app_client.get("/docs", allow_redirects=False)
+    response = app_client.get("/", allow_redirects=False)
     assert response.status_code == HTTPStatus.TEMPORARY_REDIRECT
     assert response.headers["location"].startswith("https://")

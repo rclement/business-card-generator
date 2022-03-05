@@ -12,6 +12,7 @@ router = APIRouter()
     "/vcard.svg",
     summary="Generate vCard SVG",
     description="Generate vCard QR Code in SVG format",
+    response_class=StreamingResponse,
     tags=["vcard"],
 )
 def get_vcard_svg(params: CardParams = Depends()) -> StreamingResponse:
@@ -27,6 +28,7 @@ def get_vcard_svg(params: CardParams = Depends()) -> StreamingResponse:
     "/vcard.png",
     summary="Generate vCard PNG",
     description="Generate vCard QR Code in PNG format",
+    response_class=StreamingResponse,
     tags=["vcard"],
 )
 def get_vcard_png(params: CardParams = Depends()) -> StreamingResponse:
@@ -42,6 +44,7 @@ def get_vcard_png(params: CardParams = Depends()) -> StreamingResponse:
     "/vcard.vcf",
     summary="Generate vCard VCF",
     description="Generate vCard in VCF format",
+    response_class=StreamingResponse,
     tags=["vcard"],
 )
 def get_vcard_vcf(params: CardParams = Depends()) -> StreamingResponse:
@@ -57,6 +60,7 @@ def get_vcard_vcf(params: CardParams = Depends()) -> StreamingResponse:
     "/mecard.svg",
     summary="Generate MeCard SVG",
     description="Generate MeCard QR Code in SVG format",
+    response_class=StreamingResponse,
     tags=["mecard"],
 )
 def get_mecard_svg(params: CardParams = Depends()) -> StreamingResponse:
@@ -72,6 +76,7 @@ def get_mecard_svg(params: CardParams = Depends()) -> StreamingResponse:
     "/mecard.png",
     summary="Generate MeCard PNG",
     description="Generate MeCard QR Code in PNG format",
+    response_class=StreamingResponse,
     tags=["mecard"],
 )
 def get_mecard_png(params: CardParams = Depends()) -> StreamingResponse:
@@ -87,6 +92,7 @@ def get_mecard_png(params: CardParams = Depends()) -> StreamingResponse:
     "/mecard.vcf",
     summary="Generate MeCard VCF",
     description="Generate MeCard in VCF format",
+    response_class=StreamingResponse,
     tags=["mecard"],
 )
 def get_mecard_vcf(params: CardParams = Depends()) -> StreamingResponse:

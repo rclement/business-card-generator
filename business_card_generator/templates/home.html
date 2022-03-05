@@ -1,0 +1,42 @@
+{% extends "_base.html" %}
+
+{%- block content %}
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container content">
+      <div class="columns">
+        <div class="column is-half is-offset-one-quarter">
+          <h1>
+            {{ request.app.title }} <span class="has-text-weight-light is-size-6">({{ request.app.version }})</span>
+            </h2>
+
+            <p>
+              {{ request.app.description }}
+            </p>
+
+            <h2>API Documentation</h2>
+
+            <a class="button is-link is-outlined" href="{{ url_for('swagger_ui_html') }}">Swagger</a>
+            <a class="button is-link is-outlined" href="{{ url_for('redoc_html') }}">Redoc</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-foot">
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p class="heading">
+          Source-code available on <a href="https://github.com/rclement/business-card-generator">GitHub</a>
+          <br />
+          Free open-source software under AGPLv3 License
+          <br />
+          Built using the <a href="https://fastapi.tiangolo.com">FastAPI</a> framework.
+          <br />
+          Copyright (c) 2022-present <a href="https://romain-clement.net">Romain Clement</a>
+        </p>
+      </div>
+    </footer>
+  </div>
+</section>
+{%- endblock %}
