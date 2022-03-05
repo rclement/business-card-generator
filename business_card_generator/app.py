@@ -30,6 +30,6 @@ def create_app(env_file: Optional[str] = ".env") -> FastAPI:
         allow_headers=["*"],
     )
 
-    app.include_router(api.router, prefix="/api", tags=["api"])
+    app.include_router(api.router, prefix="/api")
 
     return app

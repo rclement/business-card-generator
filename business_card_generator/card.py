@@ -1,22 +1,8 @@
-import io
-import mimetypes
-
-from dataclasses import dataclass
 from datetime import date
-from enum import Enum
+from io import BytesIO, StringIO
 from typing import Optional
 from pydantic import BaseModel, EmailStr
-from segno import QRCode, helpers
-
-
-class CardKind(str, Enum):
-    mecard = "mecard"
-    vcard = "vcard"
-
-
-class CardFormat(str, Enum):
-    svg = "svg"
-    png = "png"
+from segno import QRCode, helpers, make_qr
 
 
 class CardParams(BaseModel):
@@ -31,60 +17,78 @@ class CardParams(BaseModel):
     zipcode: Optional[str] = None
     state: Optional[str] = None
     country: Optional[str] = None
-    kind: CardKind = CardKind.mecard
-    format: CardFormat = CardFormat.svg
-    scale: float = 4.0
 
 
-@dataclass
-class Card:
-    image: io.BytesIO
-    mimetype: str
+class BaseCard:
+    params: CardParams
+    data: str
+    qrcode: QRCode
+    name: str = "card"
+
+    def __init__(self, params: CardParams) -> None:
+        self.params = params
+        self.data = self.generate_data(params)
+        self.qrcode = make_qr(self.data)
+
+    def generate_data(self, params: CardParams) -> str:
+        raise NotImplementedError  # pragma: no cover
+
+    def vcf(self) -> StringIO:
+        return StringIO(self.data)
+
+    def qrcode_svg(self, scale: float = 4.0) -> BytesIO:
+        image = BytesIO()
+        self.qrcode.save(image, kind="svg", scale=scale, svgclass=self.name)
+        image.seek(0)
+        return image
+
+    def qrcode_png(self, scale: float = 4.0) -> BytesIO:
+        image = BytesIO()
+        self.qrcode.save(image, kind="png", scale=scale)
+        image.seek(0)
+        return image
 
 
-def create_mecard(params: CardParams) -> QRCode:
-    return helpers.make_mecard(
-        name=params.name,
-        nickname=params.nickname,
-        memo=params.title,
-        birthday=params.birthday.strftime("%Y%m%d") if params.birthday else None,
-        email=params.email,
-        phone=params.phone,
-        houseno=params.street,
-        city=params.city,
-        zipcode=params.zipcode,
-        prefecture=params.state,
-        country=params.country,
-    )
+class VCard(BaseCard):
+    name: str = "vcard"
+
+    def __init__(self, params: CardParams) -> None:
+        super().__init__(params)
+
+    def generate_data(self, params: CardParams) -> str:
+        return helpers.make_vcard_data(
+            name=params.name,
+            displayname=params.name,
+            email=params.email,
+            phone=params.phone,
+            memo=params.title,
+            nickname=params.nickname,
+            birthday=params.birthday,
+            street=params.street,
+            city=params.city,
+            region=params.state,
+            zipcode=params.zipcode,
+            country=params.country,
+        )
 
 
-def create_vcard(params: CardParams) -> QRCode:
-    return helpers.make_vcard(
-        name=params.name,
-        displayname=params.name,
-        email=params.email,
-        phone=params.phone,
-        memo=params.title,
-        nickname=params.nickname,
-        birthday=params.birthday,
-        street=params.street,
-        city=params.city,
-        region=params.state,
-        zipcode=params.zipcode,
-        country=params.country,
-    )
+class MeCard(BaseCard):
+    name: str = "mecard"
 
+    def __init__(self, params: CardParams) -> None:
+        super().__init__(params)
 
-def create_card(params: CardParams) -> Card:
-    factories = {
-        CardKind.mecard: create_mecard,
-        CardKind.vcard: create_vcard,
-    }
-    qrcode = factories[params.kind](params)
-
-    image = io.BytesIO()
-    qrcode.save(image, kind=params.format.value, scale=params.scale)
-    image.seek(0)
-    mimetype = mimetypes.types_map[f".{params.format.value}"]
-
-    return Card(image=image, mimetype=mimetype)
+    def generate_data(self, params: CardParams) -> str:
+        return helpers.make_mecard_data(
+            name=params.name,
+            nickname=params.nickname,
+            memo=params.title,
+            birthday=params.birthday.strftime("%Y%m%d") if params.birthday else None,
+            email=params.email,
+            phone=params.phone,
+            houseno=params.street,
+            city=params.city,
+            zipcode=params.zipcode,
+            prefecture=params.state,
+            country=params.country,
+        )
