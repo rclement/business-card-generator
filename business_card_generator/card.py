@@ -1,17 +1,21 @@
 from datetime import date
 from io import BytesIO, StringIO
 from typing import Optional
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, HttpUrl
 from segno import QRCode, helpers, make_qr
 
 
 class CardParams(BaseModel):
-    name: str
+    firstname: str
+    lastname: str
     nickname: Optional[str] = None
-    title: Optional[str] = None
     birthday: Optional[date] = None
+    company: Optional[str] = None
+    job: Optional[str] = None
     email: Optional[EmailStr] = None
     phone: Optional[str] = None
+    website: Optional[HttpUrl] = None
+    picture: Optional[HttpUrl] = None
     street: Optional[str] = None
     city: Optional[str] = None
     zipcode: Optional[str] = None
@@ -57,13 +61,16 @@ class VCard(BaseCard):
 
     def generate_data(self, params: CardParams) -> str:
         return helpers.make_vcard_data(
-            name=params.name,
-            displayname=params.name,
-            email=params.email,
-            phone=params.phone,
-            memo=params.title,
+            name=f"{params.lastname};{params.firstname}",
+            displayname=f"{params.firstname} {params.lastname}",
             nickname=params.nickname,
             birthday=params.birthday,
+            org=params.company,
+            title=params.job,
+            email=params.email,
+            phone=params.phone,
+            url=params.website,
+            photo_uri=params.picture,
             street=params.street,
             city=params.city,
             region=params.state,
@@ -80,12 +87,13 @@ class MeCard(BaseCard):
 
     def generate_data(self, params: CardParams) -> str:
         return helpers.make_mecard_data(
-            name=params.name,
+            name=f"{params.lastname},{params.firstname}",
             nickname=params.nickname,
-            memo=params.title,
             birthday=params.birthday.strftime("%Y%m%d") if params.birthday else None,
+            memo=params.company,
             email=params.email,
             phone=params.phone,
+            url=params.website,
             houseno=params.street,
             city=params.city,
             zipcode=params.zipcode,

@@ -32,4 +32,20 @@ def app_client(app: FastAPI) -> Generator[TestClient, None, None]:
 
 @pytest.fixture(scope="function")
 def card_params(faker: Faker) -> Dict[str, str]:
-    return dict(name=faker.name())
+    return dict(
+        firstname=faker.first_name(),
+        lastname=faker.last_name(),
+        nickname=faker.first_name(),
+        birthday=faker.date(),
+        company=faker.company(),
+        job=faker.job(),
+        email=faker.email(),
+        phone=faker.phone_number(),
+        website=faker.url(),
+        picture=faker.image_url(),
+        street=faker.street_address(),
+        city=faker.city(),
+        zipcode=faker.zipcode(),
+        state=faker.state(),
+        country=faker.country(),
+    )
