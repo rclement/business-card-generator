@@ -2,15 +2,14 @@ import mimetypes
 import pytest
 
 from http import HTTPStatus
-from typing import Any
-from faker import Faker
+from typing import Any, Dict
 from fastapi.testclient import TestClient
 
 
-def test_get_vcard_svg_success(app_client: TestClient, faker: Faker) -> None:
-    params = dict(name=faker.name())
-
-    response = app_client.get("/api/vcard.svg", params=params)
+def test_get_vcard_svg_success(
+    app_client: TestClient, card_params: Dict[str, str]
+) -> None:
+    response = app_client.get("/api/vcard.svg", params=card_params)
 
     assert response.status_code == HTTPStatus.OK
     assert response.headers["content-type"] == mimetypes.types_map[".svg"]
@@ -32,11 +31,11 @@ def test_get_vcard_svg_success(app_client: TestClient, faker: Faker) -> None:
     ),
 )
 def test_get_vcard_svg_invalid_parameter(
-    app_client: TestClient, faker: Faker, key: str, value: Any
+    app_client: TestClient, card_params: Dict[str, str], key: str, value: Any
 ) -> None:
-    params = {"name": faker.name(), key: value}
+    card_params[key] = value
 
-    response = app_client.get("/api/vcard.svg", params=params)
+    response = app_client.get("/api/vcard.svg", params=card_params)
 
     assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY
 
@@ -44,10 +43,10 @@ def test_get_vcard_svg_invalid_parameter(
 # ------------------------------------------------------------------------------
 
 
-def test_get_vcard_png_success(app_client: TestClient, faker: Faker) -> None:
-    params = dict(name=faker.name())
-
-    response = app_client.get("/api/vcard.png", params=params)
+def test_get_vcard_png_success(
+    app_client: TestClient, card_params: Dict[str, str]
+) -> None:
+    response = app_client.get("/api/vcard.png", params=card_params)
 
     assert response.status_code == HTTPStatus.OK
     assert response.headers["content-type"] == mimetypes.types_map[".png"]
@@ -58,10 +57,10 @@ def test_get_vcard_png_success(app_client: TestClient, faker: Faker) -> None:
 # ------------------------------------------------------------------------------
 
 
-def test_get_vcard_vcf_success(app_client: TestClient, faker: Faker) -> None:
-    params = dict(name=faker.name())
-
-    response = app_client.get("/api/vcard.vcf", params=params)
+def test_get_vcard_vcf_success(
+    app_client: TestClient, card_params: Dict[str, str]
+) -> None:
+    response = app_client.get("/api/vcard.vcf", params=card_params)
 
     assert response.status_code == HTTPStatus.OK
     assert (
@@ -73,8 +72,8 @@ def test_get_vcard_vcf_success(app_client: TestClient, faker: Faker) -> None:
     assert (
         response.text == "BEGIN:VCARD\r\n"
         "VERSION:3.0\r\n"
-        f'N:{params["name"]}\r\n'
-        f'FN:{params["name"]}\r\n'
+        f'N:{card_params["name"]}\r\n'
+        f'FN:{card_params["name"]}\r\n'
         "END:VCARD\r\n"
     )
 
@@ -82,10 +81,10 @@ def test_get_vcard_vcf_success(app_client: TestClient, faker: Faker) -> None:
 # ------------------------------------------------------------------------------
 
 
-def test_get_mecard_svg_success(app_client: TestClient, faker: Faker) -> None:
-    params = dict(name=faker.name())
-
-    response = app_client.get("/api/mecard.svg", params=params)
+def test_get_mecard_svg_success(
+    app_client: TestClient, card_params: Dict[str, str]
+) -> None:
+    response = app_client.get("/api/mecard.svg", params=card_params)
 
     assert response.status_code == HTTPStatus.OK
     assert response.headers["content-type"] == mimetypes.types_map[".svg"]
@@ -102,10 +101,10 @@ def test_get_mecard_svg_success(app_client: TestClient, faker: Faker) -> None:
 # ------------------------------------------------------------------------------
 
 
-def test_get_mecard_png_success(app_client: TestClient, faker: Faker) -> None:
-    params = dict(name=faker.name())
-
-    response = app_client.get("/api/mecard.png", params=params)
+def test_get_mecard_png_success(
+    app_client: TestClient, card_params: Dict[str, str]
+) -> None:
+    response = app_client.get("/api/mecard.png", params=card_params)
 
     assert response.status_code == HTTPStatus.OK
     assert response.headers["content-type"] == mimetypes.types_map[".png"]
@@ -116,10 +115,10 @@ def test_get_mecard_png_success(app_client: TestClient, faker: Faker) -> None:
 # ------------------------------------------------------------------------------
 
 
-def test_get_mecard_vcf_success(app_client: TestClient, faker: Faker) -> None:
-    params = dict(name=faker.name())
-
-    response = app_client.get("/api/mecard.vcf", params=params)
+def test_get_mecard_vcf_success(
+    app_client: TestClient, card_params: Dict[str, str]
+) -> None:
+    response = app_client.get("/api/mecard.vcf", params=card_params)
 
     assert response.status_code == HTTPStatus.OK
     assert (
@@ -128,4 +127,4 @@ def test_get_mecard_vcf_success(app_client: TestClient, faker: Faker) -> None:
     )
     assert response.headers["content-disposition"] == "filename=mecard.vcf"
     assert len(response.content) > 0
-    assert response.text == f'MECARD:N:{params["name"]};;'
+    assert response.text == f'MECARD:N:{card_params["name"]};;'

@@ -1,7 +1,8 @@
 import os
 import pytest
 
-from typing import Generator
+from typing import Dict, Generator
+from faker import Faker
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -27,3 +28,8 @@ def app() -> FastAPI:
 def app_client(app: FastAPI) -> Generator[TestClient, None, None]:
     with TestClient(app) as test_client:
         yield test_client
+
+
+@pytest.fixture(scope="function")
+def card_params(faker: Faker) -> Dict[str, str]:
+    return dict(name=faker.name())
