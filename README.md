@@ -2,9 +2,9 @@
 
 # Business Card Generator
 
-[![CI/CD](https://github.com/rclement/mailer/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/rclement/mailer/actions/workflows/ci-cd.yml)
-[![Coverage Status](https://img.shields.io/codecov/c/github/rclement/mailer)](https://codecov.io/gh/rclement/mailer)
-[![License](https://img.shields.io/github/license/rclement/mailer)](https://github.com/rmnclmnt/mailer/blob/master/LICENSE)
+[![CI/CD](https://github.com/rclement/business-card-generator/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/rclement/business-card-generator/actions/workflows/ci-cd.yml)
+[![Coverage Status](https://img.shields.io/codecov/c/github/rclement/business-card-generator)](https://codecov.io/gh/rclement/business-card-generator)
+[![License](https://img.shields.io/github/license/rclement/business-card-generator)](https://github.com/rmnclmnt/business-card-generator/blob/master/LICENSE)
 
 Everyone needs a business card. Or multiple ones. Or in multiple formats.
 Might as well be able to generate them on the fly.

@@ -4,6 +4,7 @@ on: [push]
 
 env:
   BASE_URL_PREVIEW: bcardgen.vercel.app
+  BASE_URL_PRODUCTION: business-card-generator.vercel.app
 
 jobs:
   test:
@@ -54,7 +55,7 @@ jobs:
         run: echo "DEPLOYMENT_URL=https://${GITHUB_REF_SLUG_URL}-${BASE_URL_PREVIEW}" >> $GITHUB_ENV
       - name: Set production deployment url variable
         if: ${{ contains(github.ref, 'tags') }}
-        run: echo "DEPLOYMENT_URL=${{ secrets.MAILER_URL }}" >> $GITHUB_ENV
+        run: echo "DEPLOYMENT_URL=https://${BASE_URL_PRODUCTION}" >> $GITHUB_ENV
       - id: output_step
         run: |
           echo "::set-output name=github_ref_slug::${GITHUB_REF_SLUG_URL}"
