@@ -8,16 +8,345 @@
         <div class="column is-half is-offset-one-quarter">
           <h1>
             {{ request.app.title }} <span class="has-text-weight-light is-size-6">({{ request.app.version }})</span>
-            </h2>
+          </h1>
 
-            <p>
-              {{ request.app.description }}
-            </p>
+          <p>
+            {{ request.app.description }}
+          </p>
 
-            <h2>API Documentation</h2>
+          <hr>
 
-            <a class="button is-link is-outlined" href="{{ url_for('swagger_ui_html') }}">Swagger</a>
-            <a class="button is-link is-outlined" href="{{ url_for('redoc_html') }}">Redoc</a>
+          <form method="GET" action="{{ url_for('get_card') }}">
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <label class="label">Card Type</label>
+              </div>
+              <div class="field-body">
+                <div class="control">
+                  <label class="radio">
+                    <input
+                      type="radio"
+                      name="card_type"
+                      value="vcard"
+                      {%- if not request.query_params.card_type or request.query_params.card_type == 'vcard' %} checked{% endif %}
+                    >
+                    vCard
+                  </label>
+                  <label class="radio">
+                    <input
+                      type="radio"
+                      name="card_type"
+                      value="mecard"
+                      {%- if request.query_params.card_type == 'mecard' %} checked{% endif %}
+                    >
+                    MeCard
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Profile</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="First Name"
+                      name="firstname"
+                      value="{{ request.query_params.firstname }}"
+                      required
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', path='icons/user.svg') }}">
+                    </span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Last Name"
+                      name="lastname"
+                      value="{{ request.query_params.lastname }}"
+                      required
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', path='icons/user.svg') }}">
+                    </span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Nickname"
+                      name="nickname"
+                      value="{{ request.query_params.nickname }}"
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', path='icons/user.svg') }}">
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-normal"></div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Picture URL"
+                      name="picture"
+                      value="{{ request.query_params.picture }}"
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', path='icons/image.svg') }}">
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Birthday</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="date"
+                      name="birthday"
+                      value="{{ request.query_params.birthday }}"
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', path='icons/calendar.svg') }}">
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Organization</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Company"
+                      name="company"
+                      value="{{ request.query_params.company }}"
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', path='icons/building.svg') }}">
+                    </span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Job"
+                      name="job"
+                      value="{{ request.query_params.job }}"
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', path='icons/briefcase.svg') }}">
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-normal"></div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="email"
+                      placeholder="Email"
+                      name="email"
+                      value="{{ request.query_params.email }}"
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', path='icons/at-sign.svg') }}">
+                    </span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Phone"
+                      name="phone"
+                      value="{{ request.query_params.phone }}"
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', path='icons/phone.svg') }}">
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-normal"></div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Website"
+                      name="website"
+                      value="{{ request.query_params.website }}"
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', path='icons/link.svg') }}">
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">Address</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Street"
+                      name="street"
+                      value="{{ request.query_params.street }}"
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', path='icons/map-pin.svg') }}">
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-normal"></div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="City"
+                      name="city"
+                      value="{{ request.query_params.city }}"
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', path='icons/map-pin.svg') }}">
+                    </span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Zipcode"
+                      name="zipcode"
+                      value="{{ request.query_params.zipcode }}"
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', path='icons/map-pin.svg') }}">
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-normal"></div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="State"
+                      name="state"
+                      value="{{ request.query_params.state }}"
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', path='icons/map-pin.svg') }}">
+                    </span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Country"
+                      name="country"
+                      value="{{ request.query_params.country }}"
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', path='icons/map-pin.svg') }}">
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label"></div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <button class="button is-fullwidth" type="submit">
+                      <span class="icon">
+                        <img src="{{ url_for('static', path='icons/send.svg') }}">
+                      </span>
+                      <span>Generate</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <hr>
+
+          <h2>API Documentation</h2>
+
+          <a class="button is-link is-outlined" href="{{ url_for('swagger_ui_html') }}">Swagger</a>
+          <a class="button is-link is-outlined" href="{{ url_for('redoc_html') }}">Redoc</a>
         </div>
       </div>
     </div>

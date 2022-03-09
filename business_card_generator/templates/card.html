@@ -1,0 +1,62 @@
+{% extends "_base.html" %}
+
+{%- block content %}
+{% set params = request.query_params %}
+{% if params.card_type == 'vcard' %}
+  {% set image_base_url = url_for('get_vcard_svg') %}
+  {% set download_base_url = url_for('get_vcard_vcf') %}
+{% elif params.card_type == 'mecard' %}
+  {% set image_base_url = url_for('get_mecard_svg') %}
+  {% set download_base_url = url_for('get_mecard_vcf') %}
+{% else %}
+  {% set image_base_url = '' %}
+{% endif %}
+
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container content">
+      <div class="columns">
+        <div class="column is-half is-offset-one-quarter">
+          <div class="is-flex is-justify-content-center">
+            <figure class="image is-128x128">
+              <img src="{{ image_base_url }}?{{ params }}">
+            </figure>
+          </div>
+
+          <hr>
+
+          <div class="has-text-centered">
+            <a class="button" href="{{ url_for('get_home') }}?{{ params }}">
+              <span class="icon is-small">
+                <img src="{{ url_for('static', path='icons/edit.svg') }}">
+              </span>
+              <span>Edit</span>
+            </a>
+
+            <a class="button" href="{{ download_base_url }}?{{ params }}">
+              <span class="icon is-small">
+                <img src="{{ url_for('static', path='icons/download.svg') }}">
+              </span>
+              <span>Download</span>
+            </a>
+          </div>
+
+          <hr>
+
+          <div class="h-card">
+            <div class="is-flex is-justify-content-center">
+              <figure class="image is-64x64">
+                <img class="u-photo is-rounded" src="{{ params.picture }}"/>
+              </figure>
+            </div>
+
+            <h1 class="has-text-centered">
+              <span class="p-name">{{ params.firstname }} {{ params.lastname }}</span>
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{%- endblock %}
