@@ -16,10 +16,6 @@ def test_get_home_success(app: FastAPI, app_client: TestClient) -> None:
     assert __about__.__version__ in data
     assert __about__.__description__ in data
 
-    assert "API Documentation" in data
-    assert app.url_path_for("swagger_ui_html") in data
-    assert app.url_path_for("redoc_html") in data
-
     assert '<form method="GET"' in data
     assert app.url_path_for("get_card") in data
 
@@ -95,7 +91,10 @@ def test_get_card_success(
     assert "Edit" in data
     assert app.url_path_for("get_home") in data
 
-    assert "Download" in data
+    assert "PNG" in data
+    assert app.url_path_for(f"get_{card_type}_png") in data
+
+    assert "VCF" in data
     assert app.url_path_for(f"get_{card_type}_vcf") in data
 
     # for v in card_params.values():
