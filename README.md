@@ -30,6 +30,7 @@ cp .example.env .env
 pipenv install -d
 pipenv shell
 inv qa
+flask run
 ```
 
 ### VSCode
@@ -41,13 +42,17 @@ If using VSCode, use the following configuration in `.vscode/launch.json`:
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Python: FastAPI",
+      "name": "Python: Flask",
       "type": "python",
       "request": "launch",
-      "module": "uvicorn",
-      "args": ["--port=8000", "--factory", "business_card_generator.app:create_app"],
-      "envFile": "",
+      "module": "flask",
+      "env": {
+        "FLASK_APP": "business_card_generator.app:create_app",
+        "FLASK_ENV": "development"
+      },
+      "args": ["run", "--no-debugger"],
       "jinja": true,
+      "envFile": "",
       "justMyCode": false
     },
     {

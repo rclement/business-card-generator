@@ -1,41 +1,138 @@
-from pathlib import Path
-from typing import Optional
-from fastapi import FastAPI
-from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
+import mimetypes
 
-from . import __about__, api, views
+from http import HTTPStatus
+from typing import Optional
+from flask import Blueprint, Flask, abort, redirect, render_template, request, send_file
+from pydantic import ValidationError
+from werkzeug.middleware.proxy_fix import ProxyFix
+from werkzeug.wrappers import Response
+from whitenoise import WhiteNoise
+
+from . import __about__
+from .card import CardParams, MeCard, VCard
 from .settings import Settings
 
 
-def create_app(env_file: Optional[str] = ".env") -> FastAPI:
-    settings = Settings(_env_file=env_file)  # type: ignore
+# ------------------------------------------------------------------------------
 
-    app = FastAPI(
-        title=__about__.__name__,
+
+views_bp = Blueprint("views", __name__)
+
+
+def card_params_from_args() -> CardParams:
+    try:
+        return CardParams(**request.args.to_dict())  # type: ignore[arg-type]
+    except ValidationError:
+        abort(HTTPStatus.UNPROCESSABLE_ENTITY)
+
+
+@views_bp.get("/")
+def get_home() -> str:
+    return render_template("home.html")
+
+
+@views_bp.get("/card")
+def get_card() -> str:
+    return render_template("card.html")
+
+
+@views_bp.get("/vcard.svg")
+def get_vcard_svg() -> Response:
+    card_params = card_params_from_args()
+    vcard = VCard(card_params)
+    return send_file(  # type: ignore[no-any-return]
+        vcard.qrcode_svg(),
+        mimetype=mimetypes.types_map[".svg"],
+        download_name="vcard.svg",
+    )
+
+
+@views_bp.get("/vcard.png")
+def get_vcard_png() -> Response:
+    card_params = card_params_from_args()
+    vcard = VCard(card_params)
+    return send_file(  # type: ignore[no-any-return]
+        vcard.qrcode_png(),
+        mimetype=mimetypes.types_map[".png"],
+        download_name="vcard.png",
+    )
+
+
+@views_bp.get("/vcard.vcf")
+def get_vcard_vcf() -> Response:
+    card_params = card_params_from_args()
+    vcard = VCard(card_params)
+    return send_file(  # type: ignore[no-any-return]
+        vcard.vcf(),
+        mimetype=mimetypes.types_map[".vcf"],
+        download_name="vcard.vcf",
+    )
+
+
+@views_bp.get("/mecard.svg")
+def get_mecard_svg() -> Response:
+    card_params = card_params_from_args()
+    mecard = MeCard(card_params)
+    return send_file(  # type: ignore[no-any-return]
+        mecard.qrcode_svg(),
+        mimetype=mimetypes.types_map[".svg"],
+        download_name="mecard.svg",
+    )
+
+
+@views_bp.get("/mecard.png")
+def get_mecard_png() -> Response:
+    card_params = card_params_from_args()
+    mecard = MeCard(card_params)
+    return send_file(  # type: ignore[no-any-return]
+        mecard.qrcode_png(),
+        mimetype=mimetypes.types_map[".png"],
+        download_name="mecard.png",
+    )
+
+
+@views_bp.get("/mecard.vcf")
+def get_mecard_vcf() -> Response:
+    card_params = card_params_from_args()
+    mecard = MeCard(card_params)
+    return send_file(  # type: ignore[no-any-return]
+        mecard.vcf(),
+        mimetype=mimetypes.types_map[".vcf"],
+        download_name="mecard.vcf",
+    )
+
+
+# ------------------------------------------------------------------------------
+
+
+def create_app(env_file: Optional[str] = ".env") -> Flask:
+    settings = Settings(_env_file=env_file)  # type: ignore[call-arg]
+
+    app = Flask(__name__)
+    app.config.from_object(settings)
+    app.config["about"] = dict(
+        name=__about__.__name__,
         description=__about__.__description__,
         version=__about__.__version__,
     )
-    app.state.settings = settings
-    app.mount(
-        "/static",
-        StaticFiles(directory=Path(__file__).parent / "static"),
-        name="static",
+    app.env = settings.app_environment
+    app.testing = settings.app_environment == "testing"
+
+    app.wsgi_app = WhiteNoise(  # type: ignore[assignment]
+        app.wsgi_app,
+        root=app.static_folder,
+        prefix=app.static_url_path,
+        autorefresh=app.debug,
     )
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)  # type: ignore[assignment]
 
-    if settings.force_https:
-        app.add_middleware(HTTPSRedirectMiddleware)
+    @app.before_request
+    def _force_https() -> Optional[Response]:
+        if settings.force_https and request.url.startswith("http://"):
+            https_url = request.url.replace("http://", "https://", 1)
+            return redirect(https_url)
+        return None
 
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=["*"],
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
-    )
-
-    app.include_router(views.router, prefix="")
-    app.include_router(api.router, prefix="/api")
+    app.register_blueprint(views_bp, url_prefix="")
 
     return app

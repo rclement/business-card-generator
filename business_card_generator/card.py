@@ -1,7 +1,7 @@
 from datetime import date
-from io import BytesIO, StringIO
-from typing import Optional
-from pydantic import BaseModel, EmailStr, HttpUrl
+from io import BytesIO
+from typing import Any, Optional
+from pydantic import BaseModel, EmailStr, HttpUrl, validator
 from segno import QRCode, helpers, make_qr
 
 
@@ -22,6 +22,13 @@ class CardParams(BaseModel):
     state: Optional[str] = None
     country: Optional[str] = None
 
+    def __init__(__pydantic_self__, **data: Any) -> None:
+        super().__init__(**data)
+
+    @validator("birthday", "email", "website", "picture", pre=True)
+    def validate_empty(cls, value: Optional[str]) -> Optional[str]:
+        return value or None
+
 
 class BaseCard:
     params: CardParams
@@ -37,8 +44,8 @@ class BaseCard:
     def generate_data(self, params: CardParams) -> str:
         raise NotImplementedError  # pragma: no cover
 
-    def vcf(self) -> StringIO:
-        return StringIO(self.data)
+    def vcf(self) -> BytesIO:
+        return BytesIO(self.data.encode("utf-8"))
 
     def qrcode_svg(self, scale: float = 4.0) -> BytesIO:
         image = BytesIO()

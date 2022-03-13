@@ -1,9 +1,9 @@
 {
   "version": 2,
   "builds": [
-    { "src": "business_card_generator/asgi.py", "use": "@vercel/python" }
+    { "src": "business_card_generator/wsgi.py", "use": "@vercel/python" }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "business_card_generator/asgi.py"}
+    { "src": "/(.*)", "dest": "business_card_generator/wsgi.py"}
   ]
 }
