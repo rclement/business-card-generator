@@ -116,6 +116,7 @@ def create_app(env_file: Optional[str] = ".env") -> Flask:
         version=__about__.__version__,
     )
     app.env = settings.app_environment
+    app.debug = settings.app_environment == "development"
     app.testing = settings.app_environment == "testing"
 
     app.wsgi_app = WhiteNoise(  # type: ignore[assignment]
@@ -124,7 +125,9 @@ def create_app(env_file: Optional[str] = ".env") -> Flask:
         prefix=app.static_url_path,
         autorefresh=app.debug,
     )
-    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)  # type: ignore[assignment]
+    app.wsgi_app = ProxyFix(  # type: ignore[assignment]
+        app.wsgi_app, x_proto=1, x_host=1
+    )
 
     @app.before_request
     def _force_https() -> Optional[Response]:
