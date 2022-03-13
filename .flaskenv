@@ -1,0 +1,1 @@
+FLASK_APP=business_card_generator.app:create_app()

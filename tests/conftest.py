@@ -3,8 +3,8 @@ import pytest
 
 from typing import Dict, Generator
 from faker import Faker
-from fastapi import FastAPI
-from fastapi.testclient import TestClient
+from flask import Flask
+from flask.testing import FlaskClient
 
 
 # ------------------------------------------------------------------------------
@@ -18,16 +18,16 @@ os.environ["FORCE_HTTPS"] = "false"
 
 
 @pytest.fixture(scope="function")
-def app() -> FastAPI:
+def app() -> Generator[Flask, None, None]:
     from business_card_generator.app import create_app
 
-    return create_app(None)
+    yield create_app(None)
 
 
 @pytest.fixture(scope="function")
-def app_client(app: FastAPI) -> Generator[TestClient, None, None]:
-    with TestClient(app) as test_client:
-        yield test_client
+def app_client(app: Flask) -> Generator[FlaskClient, None, None]:
+    with app.test_client() as client:
+        yield client
 
 
 @pytest.fixture(scope="function")

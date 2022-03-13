@@ -7,16 +7,16 @@
       <div class="columns">
         <div class="column is-half is-offset-one-quarter">
           <h1>
-            {{ request.app.title }} <span class="has-text-weight-light is-size-6">({{ request.app.version }})</span>
+            {{ config.about.name }} <span class="has-text-weight-light is-size-6">({{ config.about.version }})</span>
           </h1>
 
           <p>
-            {{ request.app.description }}
+            {{ config.about.description }}
           </p>
 
           <hr>
 
-          <form method="GET" action="{{ url_for('get_card') }}">
+          <form method="GET" action="{{ url_for('views.get_card') }}">
             <div class="field is-horizontal">
               <div class="field-label">
                 <label class="label">Card Type</label>
@@ -28,7 +28,7 @@
                       type="radio"
                       name="card_type"
                       value="vcard"
-                      {%- if not request.query_params.card_type or request.query_params.card_type == 'vcard' %} checked{% endif %}
+                      {%- if not request.args.card_type or request.args.card_type == 'vcard' %} checked{% endif %}
                     >
                     vCard
                   </label>
@@ -37,7 +37,7 @@
                       type="radio"
                       name="card_type"
                       value="mecard"
-                      {%- if request.query_params.card_type == 'mecard' %} checked{% endif %}
+                      {%- if request.args.card_type == 'mecard' %} checked{% endif %}
                     >
                     MeCard
                   </label>
@@ -57,11 +57,11 @@
                       type="text"
                       placeholder="First Name"
                       name="firstname"
-                      value="{{ request.query_params.firstname }}"
+                      value="{{ request.args.firstname }}"
                       required
                     >
                     <span class="icon is-small is-left">
-                      <img src="{{ url_for('static', path='icons/user.svg') }}">
+                      <img src="{{ url_for('static', filename='icons/user.svg') }}">
                     </span>
                   </div>
                 </div>
@@ -73,11 +73,11 @@
                       type="text"
                       placeholder="Last Name"
                       name="lastname"
-                      value="{{ request.query_params.lastname }}"
+                      value="{{ request.args.lastname }}"
                       required
                     >
                     <span class="icon is-small is-left">
-                      <img src="{{ url_for('static', path='icons/user.svg') }}">
+                      <img src="{{ url_for('static', filename='icons/user.svg') }}">
                     </span>
                   </div>
                 </div>
@@ -89,10 +89,10 @@
                       type="text"
                       placeholder="Nickname"
                       name="nickname"
-                      value="{{ request.query_params.nickname }}"
+                      value="{{ request.args.nickname }}"
                     >
                     <span class="icon is-small is-left">
-                      <img src="{{ url_for('static', path='icons/user.svg') }}">
+                      <img src="{{ url_for('static', filename='icons/user.svg') }}">
                     </span>
                   </div>
                 </div>
@@ -109,10 +109,10 @@
                       type="text"
                       placeholder="Picture URL"
                       name="picture"
-                      value="{{ request.query_params.picture }}"
+                      value="{{ request.args.picture }}"
                     >
                     <span class="icon is-small is-left">
-                      <img src="{{ url_for('static', path='icons/image.svg') }}">
+                      <img src="{{ url_for('static', filename='icons/image.svg') }}">
                     </span>
                   </div>
                 </div>
@@ -130,10 +130,10 @@
                       class="input"
                       type="date"
                       name="birthday"
-                      value="{{ request.query_params.birthday }}"
+                      value="{{ request.args.birthday }}"
                     >
                     <span class="icon is-small is-left">
-                      <img src="{{ url_for('static', path='icons/calendar.svg') }}">
+                      <img src="{{ url_for('static', filename='icons/calendar.svg') }}">
                     </span>
                   </div>
                 </div>
@@ -152,10 +152,10 @@
                       type="text"
                       placeholder="Company"
                       name="company"
-                      value="{{ request.query_params.company }}"
+                      value="{{ request.args.company }}"
                     >
                     <span class="icon is-small is-left">
-                      <img src="{{ url_for('static', path='icons/building.svg') }}">
+                      <img src="{{ url_for('static', filename='icons/building.svg') }}">
                     </span>
                   </div>
                 </div>
@@ -167,10 +167,10 @@
                       type="text"
                       placeholder="Job"
                       name="job"
-                      value="{{ request.query_params.job }}"
+                      value="{{ request.args.job }}"
                     >
                     <span class="icon is-small is-left">
-                      <img src="{{ url_for('static', path='icons/briefcase.svg') }}">
+                      <img src="{{ url_for('static', filename='icons/briefcase.svg') }}">
                     </span>
                   </div>
                 </div>
@@ -187,10 +187,10 @@
                       type="email"
                       placeholder="Email"
                       name="email"
-                      value="{{ request.query_params.email }}"
+                      value="{{ request.args.email }}"
                     >
                     <span class="icon is-small is-left">
-                      <img src="{{ url_for('static', path='icons/at-sign.svg') }}">
+                      <img src="{{ url_for('static', filename='icons/at-sign.svg') }}">
                     </span>
                   </div>
                 </div>
@@ -202,10 +202,10 @@
                       type="text"
                       placeholder="Phone"
                       name="phone"
-                      value="{{ request.query_params.phone }}"
+                      value="{{ request.args.phone }}"
                     >
                     <span class="icon is-small is-left">
-                      <img src="{{ url_for('static', path='icons/phone.svg') }}">
+                      <img src="{{ url_for('static', filename='icons/phone.svg') }}">
                     </span>
                   </div>
                 </div>
@@ -222,10 +222,10 @@
                       type="text"
                       placeholder="Website"
                       name="website"
-                      value="{{ request.query_params.website }}"
+                      value="{{ request.args.website }}"
                     >
                     <span class="icon is-small is-left">
-                      <img src="{{ url_for('static', path='icons/link.svg') }}">
+                      <img src="{{ url_for('static', filename='icons/link.svg') }}">
                     </span>
                   </div>
                 </div>
@@ -244,10 +244,10 @@
                       type="text"
                       placeholder="Street"
                       name="street"
-                      value="{{ request.query_params.street }}"
+                      value="{{ request.args.street }}"
                     >
                     <span class="icon is-small is-left">
-                      <img src="{{ url_for('static', path='icons/map-pin.svg') }}">
+                      <img src="{{ url_for('static', filename='icons/map-pin.svg') }}">
                     </span>
                   </div>
                 </div>
@@ -264,10 +264,10 @@
                       type="text"
                       placeholder="City"
                       name="city"
-                      value="{{ request.query_params.city }}"
+                      value="{{ request.args.city }}"
                     >
                     <span class="icon is-small is-left">
-                      <img src="{{ url_for('static', path='icons/map-pin.svg') }}">
+                      <img src="{{ url_for('static', filename='icons/map-pin.svg') }}">
                     </span>
                   </div>
                 </div>
@@ -279,10 +279,10 @@
                       type="text"
                       placeholder="Zipcode"
                       name="zipcode"
-                      value="{{ request.query_params.zipcode }}"
+                      value="{{ request.args.zipcode }}"
                     >
                     <span class="icon is-small is-left">
-                      <img src="{{ url_for('static', path='icons/map-pin.svg') }}">
+                      <img src="{{ url_for('static', filename='icons/map-pin.svg') }}">
                     </span>
                   </div>
                 </div>
@@ -299,10 +299,10 @@
                       type="text"
                       placeholder="State"
                       name="state"
-                      value="{{ request.query_params.state }}"
+                      value="{{ request.args.state }}"
                     >
                     <span class="icon is-small is-left">
-                      <img src="{{ url_for('static', path='icons/map-pin.svg') }}">
+                      <img src="{{ url_for('static', filename='icons/map-pin.svg') }}">
                     </span>
                   </div>
                 </div>
@@ -314,10 +314,10 @@
                       type="text"
                       placeholder="Country"
                       name="country"
-                      value="{{ request.query_params.country }}"
+                      value="{{ request.args.country }}"
                     >
                     <span class="icon is-small is-left">
-                      <img src="{{ url_for('static', path='icons/map-pin.svg') }}">
+                      <img src="{{ url_for('static', filename='icons/map-pin.svg') }}">
                     </span>
                   </div>
                 </div>
@@ -331,7 +331,7 @@
                   <div class="control">
                     <button class="button is-fullwidth" type="submit">
                       <span class="icon">
-                        <img src="{{ url_for('static', path='icons/send.svg') }}">
+                        <img src="{{ url_for('static', filename='icons/send.svg') }}">
                       </span>
                       <span>Generate</span>
                     </button>
@@ -353,7 +353,7 @@
           <br />
           Free open-source software under AGPLv3 License
           <br />
-          Built using the <a href="https://fastapi.tiangolo.com">FastAPI</a> framework.
+          Built using the <a href="https://flask.palletsprojects.com">Flask</a> framework.
           <br />
           Copyright (c) 2022-present <a href="https://romain-clement.net">Romain Clement</a>
         </p>

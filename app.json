@@ -3,7 +3,7 @@
   "description": "Everyone needs a business card",
   "website": "https://business-card-generator.vercel.app",
   "repository": "https://github.com/rclement/business-card-generator",
-  "keywords": ["python", "fastapi", "qrcode"],
+  "keywords": ["python", "flask", "qrcode", "vcard", "mecard"],
   "env": {
     "FORCE_HTTPS": {
       "description": "Force HTTPS redirect",
