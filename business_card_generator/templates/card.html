@@ -1,20 +1,19 @@
 {% extends "_base.html" %}
 
 {%- block content %}
-{% set qs = request.query_string.decode('utf-8') %}
 {% set params = request.args %}
 {% if params.card_type == 'vcard' %}
-  {% set svg_base_url = url_for('views.get_vcard_svg') %}
-  {% set png_base_url = url_for('views.get_vcard_png') %}
-  {% set vcf_base_url = url_for('views.get_vcard_vcf') %}
+  {% set svg_url = url_for('views.get_vcard_svg', **params) %}
+  {% set png_url = url_for('views.get_vcard_png', **params) %}
+  {% set vcf_url = url_for('views.get_vcard_vcf', **params) %}
 {% elif params.card_type == 'mecard' %}
-  {% set svg_base_url = url_for('views.get_mecard_svg') %}
-  {% set png_base_url = url_for('views.get_mecard_png') %}
-  {% set vcf_base_url = url_for('views.get_mecard_vcf') %}
+  {% set svg_url = url_for('views.get_mecard_svg', **params) %}
+  {% set png_url = url_for('views.get_mecard_png', **params) %}
+  {% set vcf_url = url_for('views.get_mecard_vcf', **params) %}
 {% else %}
-  {% set svg_base_url = '' %}
-  {% set png_base_url = '' %}
-  {% set vcf_base_url = '' %}
+  {% set svg_url = '' %}
+  {% set png_url = '' %}
+  {% set vcf_url = '' %}
 {% endif %}
 
 <section class="hero is-fullheight">
@@ -24,28 +23,28 @@
         <div class="column is-half is-offset-one-quarter">
           <div class="is-flex is-justify-content-center">
             <figure class="image is-128x128">
-              <img src="{{ svg_base_url }}?{{ qs }}">
+              <img src="{{ svg_url }}">
             </figure>
           </div>
 
           <hr>
 
           <div class="has-text-centered">
-            <a class="button" href="{{ url_for('views.get_home') }}?{{ qs }}">
+            <a class="button" href="{{ url_for('views.get_home', **params) }}">
               <span class="icon is-small">
                 <img src="{{ url_for('static', filename='icons/edit.svg') }}">
               </span>
               <span>Edit</span>
             </a>
 
-            <a class="button" href="{{ png_base_url }}?{{ qs }}">
+            <a class="button" href="{{ png_url }}">
               <span class="icon is-small">
                 <img src="{{ url_for('static', filename='icons/download.svg') }}">
               </span>
               <span>PNG</span>
             </a>
 
-            <a class="button" href="{{ vcf_base_url }}?{{ qs }}">
+            <a class="button" href="{{ vcf_url }}">
               <span class="icon is-small">
                 <img src="{{ url_for('static', filename='icons/download.svg') }}">
               </span>
