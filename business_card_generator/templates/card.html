@@ -20,50 +20,105 @@
   <div class="hero-body">
     <div class="container content">
       <div class="columns">
-        <div class="column is-half is-offset-one-quarter">
-          <div class="is-flex is-justify-content-center">
-            <figure class="image is-128x128">
-              <img src="{{ svg_url }}">
-            </figure>
-          </div>
-
-          <hr>
-
-          <div class="has-text-centered">
-            <a class="button" href="{{ url_for('views.get_home', **params) }}">
-              <span class="icon is-small">
-                <img src="{{ url_for('static', filename='icons/edit.svg') }}">
-              </span>
-              <span>Edit</span>
-            </a>
-
-            <a class="button" href="{{ png_url }}">
-              <span class="icon is-small">
-                <img src="{{ url_for('static', filename='icons/download.svg') }}">
-              </span>
-              <span>PNG</span>
-            </a>
-
-            <a class="button" href="{{ vcf_url }}">
-              <span class="icon is-small">
-                <img src="{{ url_for('static', filename='icons/download.svg') }}">
-              </span>
-              <span>VCF</span>
-            </a>
-          </div>
-
-          <hr>
-
-          <div class="h-card">
-            <div class="is-flex is-justify-content-center">
-              <figure class="image is-64x64">
-                <img class="u-photo is-rounded" src="{{ params.picture }}"/>
+        <div class="column is-one-third is-offset-one-third">
+          <div class="card h-card">
+            <div class="card-image is-flex is-justify-content-center">
+              <figure class="image is-128x128">
+                <img src="{{ svg_url }}" alt="SVG QR-Code">
               </figure>
             </div>
 
-            <h1 class="has-text-centered">
-              <span class="p-name">{{ params.firstname }} {{ params.lastname }}</span>
-            </h1>
+            <div class="card-content">
+              <div class="media">
+                {% if params.picture %}
+                <div class="media-left">
+                  <figure class="image is-64x64 mx-0">
+                    <img class="u-photo is-rounded" src="{{ params.picture }}"/>
+                  </figure>
+                </div>
+                {% endif %}
+
+                <div class="media-content">
+                  <p class="title is-4 mb-1 p-name">{{ params.firstname }}{% if params.nickname %} "{{ params.nickname }}"{% endif %} {{ params.lastname }}</p>
+                  {% if params.company %}<span class="p-org">{{ params.company }}</span><br>{% endif %}
+                  {% if params.job %}<span class="p-job-title">{{ params.job }}</span>{% endif %}
+                </div>
+              </div>
+
+              <div class="content">
+                {% if params.email %}
+                <div class="block icon-text">
+                  <span class="icon">
+                    <img src="{{ url_for('static', filename='icons/at-sign.svg') }}">
+                  </span>
+                  <a class="u-email" href="mailto:{{ params.email }}">{{ params.email }}</a>
+                </div>
+                {% endif %}
+
+                {% if params.phone %}
+                <div class="block icon-text">
+                  <span class="icon">
+                    <img src="{{ url_for('static', filename='icons/phone.svg') }}">
+                  </span>
+                  <a class="p-tel" href="tel:{{ params.phone }}">{{ params.phone }}</a>
+                </div>
+                {% endif %}
+
+                {% if params.website %}
+                <div class="block icon-text">
+                  <span class="icon">
+                    <img src="{{ url_for('static', filename='icons/link.svg') }}">
+                  </span>
+                  <a class="u-url" href="{{ params.website }}">{{ params.website }}</a>
+                </div>
+                {% endif %}
+
+                {% if params.birthday %}
+                <div class="block icon-text">
+                  <span class="icon">
+                    <img src="{{ url_for('static', filename='icons/calendar.svg') }}">
+                  </span>
+                  <span class="dt-bday">{{ params.birthday }}</span>
+                </div>
+                {% endif %}
+
+                {% if params.street or params.city or params.zipcode or params.state or params.country %}
+                <div class="icon-text p-adr h-adr">
+                  <span class="icon">
+                    <img src="{{ url_for('static', filename='icons/map-pin.svg') }}">
+                  </span>
+                  {% if params.street %}<div class="p-street-address">{{ params.street }}</div>,{% endif %}
+                  {% if params.city %}<span class="p-locality">{{ params.city }}</span>,{% endif %}
+                  {% if params.zipcode %}<span class="p-postal-code">{{ params.zipcode }}</span>,{% endif %}
+                  {% if params.state %}<span class="p-region">{{ params.state }}</span>,{% endif %}
+                  {% if params.country %}<span class="p-country-name">{{ params.country }}</span>{% endif %}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <footer class="card-footer">
+              <a class="card-footer-item" href="{{ url_for('views.get_home', **params) }}">
+                <span class="icon is-small mx-1">
+                  <img src="{{ url_for('static', filename='icons/edit.svg') }}">
+                </span>
+                <span>Edit</span>
+              </a>
+
+              <a class="card-footer-item" href="{{ png_url }}">
+                <span class="icon is-small mx-1">
+                  <img src="{{ url_for('static', filename='icons/download.svg') }}">
+                </span>
+                <span>PNG</span>
+              </a>
+
+              <a class="card-footer-item" href="{{ vcf_url }}">
+                <span class="icon is-small mx-1">
+                  <img src="{{ url_for('static', filename='icons/download.svg') }}">
+                </span>
+                <span>VCF</span>
+              </a>
+            </footer>
           </div>
         </div>
       </div>

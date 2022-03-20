@@ -122,8 +122,8 @@ def test_get_card_success(
     assert "VCF" in data
     assert url_for(f"views.get_{card_type}_vcf") in data
 
-    # for v in card_params.values():
-    #     assert v in data
+    for v in card_params.values():
+        assert v in data
 
 
 # ------------------------------------------------------------------------------
