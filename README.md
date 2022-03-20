@@ -1,4 +1,4 @@
-![Banner QR Card](https://business-card-generator.vercel.app/api/card?name=John%20Doe&format=png)
+![Banner QR Card](https://business-card-generator.vercel.app/vcard.svg?firstname=Romain&lastname=Clement&picture=https%3A%2F%2Fromain-clement.net%2Fstatic%2Ficon.png&company=Freelance&job=Software+|+Data+|+AI&email=contact%2Bgithub%40romain-clement.net&phone=&website=https%3A%2F%2Fromain-clement.net)
 
 # Business Card Generator
 
@@ -13,6 +13,48 @@ This software allows to generate digital QR-code business cards:
 
 - [MeCard](https://en.wikipedia.org/wiki/MeCard_(QR_code))
 - [vCard](https://en.wikipedia.org/wiki/VCard)
+
+## Usage
+
+The easiest way to generate a business card is to use the online
+[web application](https://business-card-generator.vercel.app).
+
+You can also integrate URLs for website/keynotes integration using the following scheme:
+
+```
+https://business-card-generator.vercel.app/<card-type>.<card-format>?<card-parameters>
+```
+
+Available card types:
+
+- `vcard`
+- `mecard`
+
+Available card formats:
+
+- `svg`
+- `png`
+- `vcf`
+
+Available card parameters:
+
+| Parameter   | Format                | Required | Description            |
+| ----------- | --------------------- | -------- | ---------------------- |
+| `firstname` | `string`              | Yes      | First name             |
+| `lastname`  | `str`                 | Yes      | Last name              |
+| `nickname`  | `str`                 | No       | Nickname               |
+| `birthday`  | `date` (`YYYY-MM-DD`) | No       | Birthday               |
+| `company`   | `str`                 | No       | Company name           |
+| `job`       | `str`                 | No       | Job title              |
+| `email`     | `EmailStr`            | No       | E-mail address         |
+| `phone`     | `str`                 | No       | Phone number           |
+| `website`   | `HttpUrl`             | No       | Website URL            |
+| `picture`   | `HttpUrl`             | No       | Picture URL            |
+| `street`    | `str`                 | No       | Street number and name |
+| `city`      | `str`                 | No       | City                   |
+| `zipcode`   | `str`                 | No       | Zipcode                |
+| `state`     | `str`                 | No       | State or region        |
+| `country`   | `str`                 | No       | Country                |
 
 ## Deployment
 
