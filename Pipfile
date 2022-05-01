@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-email-validator = "<1.2.0"
+email-validator = "<1.2.2"
 flask = "==2.1.2"
 gunicorn = "==20.1.0"
 honcho = "==1.1.0"
