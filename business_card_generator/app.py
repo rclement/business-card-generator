@@ -40,7 +40,7 @@ def get_card() -> str:
 def get_vcard_svg() -> Response:
     card_params = card_params_from_args()
     vcard = VCard(card_params)
-    return send_file(  # type: ignore[no-any-return]
+    return send_file(
         vcard.qrcode_svg(),
         mimetype=mimetypes.types_map[".svg"],
         download_name="vcard.svg",
@@ -51,7 +51,7 @@ def get_vcard_svg() -> Response:
 def get_vcard_png() -> Response:
     card_params = card_params_from_args()
     vcard = VCard(card_params)
-    return send_file(  # type: ignore[no-any-return]
+    return send_file(
         vcard.qrcode_png(),
         mimetype=mimetypes.types_map[".png"],
         download_name="vcard.png",
@@ -62,7 +62,7 @@ def get_vcard_png() -> Response:
 def get_vcard_vcf() -> Response:
     card_params = card_params_from_args()
     vcard = VCard(card_params)
-    return send_file(  # type: ignore[no-any-return]
+    return send_file(
         vcard.vcf(),
         mimetype=mimetypes.types_map[".vcf"],
         download_name="vcard.vcf",
@@ -73,7 +73,7 @@ def get_vcard_vcf() -> Response:
 def get_mecard_svg() -> Response:
     card_params = card_params_from_args()
     mecard = MeCard(card_params)
-    return send_file(  # type: ignore[no-any-return]
+    return send_file(
         mecard.qrcode_svg(),
         mimetype=mimetypes.types_map[".svg"],
         download_name="mecard.svg",
@@ -84,7 +84,7 @@ def get_mecard_svg() -> Response:
 def get_mecard_png() -> Response:
     card_params = card_params_from_args()
     mecard = MeCard(card_params)
-    return send_file(  # type: ignore[no-any-return]
+    return send_file(
         mecard.qrcode_png(),
         mimetype=mimetypes.types_map[".png"],
         download_name="mecard.png",
@@ -95,7 +95,7 @@ def get_mecard_png() -> Response:
 def get_mecard_vcf() -> Response:
     card_params = card_params_from_args()
     mecard = MeCard(card_params)
-    return send_file(  # type: ignore[no-any-return]
+    return send_file(
         mecard.vcf(),
         mimetype=mimetypes.types_map[".vcf"],
         download_name="mecard.vcf",
@@ -115,7 +115,6 @@ def create_app(env_file: Optional[str] = ".env") -> Flask:
         description=__about__.__description__,
         version=__about__.__version__,
     )
-    app.env = settings.app_environment
     app.debug = settings.app_environment == "development"
     app.testing = settings.app_environment == "testing"
 
