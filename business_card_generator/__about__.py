@@ -1,4 +1,4 @@
-version = (0, 1, 0)
+version = (0, 2, 0)
 __version__ = ".".join(str(v) for v in version)
 __name__ = "Business Card Generator"
 __description__ = (
