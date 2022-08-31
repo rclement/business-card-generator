@@ -21,7 +21,7 @@ views_bp = Blueprint("views", __name__)
 
 def card_params_from_args() -> CardParams:
     try:
-        return CardParams(**request.args.to_dict())  # type: ignore[arg-type]
+        return CardParams(**request.args.to_dict())
     except ValidationError:
         abort(HTTPStatus.UNPROCESSABLE_ENTITY)
 
