@@ -15,7 +15,7 @@ whitenoise = "==6.2.0"
 [dev-packages]
 bandit = "==1.7.4"
 black = "==22.8.0"
-faker = "==14.2.1"
+faker = "==15.0.0"
 flake8 = "==5.0.4"
 invoke = "==1.7.1"
 mypy = "==0.971"
