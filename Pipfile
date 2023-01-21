@@ -21,7 +21,7 @@ invoke = "==2.0.0"
 mypy = "==0.991"
 pytest = "==7.2.1"
 pytest-cov = "==4.0.0"
-python-dotenv = "==0.21.0"
+python-dotenv = "==0.21.1"
 safety = "==2.3.5"
 
 [requires]
