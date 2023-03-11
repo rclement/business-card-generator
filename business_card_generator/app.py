@@ -118,13 +118,13 @@ def create_app(env_file: Optional[str] = ".env") -> Flask:
     app.debug = settings.app_environment == "development"
     app.testing = settings.app_environment == "testing"
 
-    app.wsgi_app = WhiteNoise(  # type: ignore[assignment]
+    app.wsgi_app = WhiteNoise(  # type: ignore[method-assign]
         app.wsgi_app,
         root=app.static_folder,
         prefix=app.static_url_path,
         autorefresh=app.debug,
     )
-    app.wsgi_app = ProxyFix(  # type: ignore[assignment]
+    app.wsgi_app = ProxyFix(  # type: ignore[method-assign]
         app.wsgi_app, x_proto=1, x_host=1
     )
 
