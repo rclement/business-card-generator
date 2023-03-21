@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "90a7d54f96cfb6b2d47ac2aaaee0ebb5e1c44d99c5e678a24006d0fd7828d39e"
+            "sha256": "b347d28a018e21e92e6f407d201e0ad58097deb7253a1dcf56629b6e933c4ca5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -439,11 +439,11 @@
         },
         "faker": {
             "hashes": [
-                "sha256:20272ff42eaa3fd0a83d1c4ad27a6c0a58ebded4e48411a635b31643087d4bd6",
-                "sha256:daf4fc907cdc009bfde011db845d9847e0293baa701c49607bac1184f11e5d95"
+                "sha256:2deeee8fed3d1b8ae5f87d172d4569ddc859aab8693f7cd68eddc5d20400563a",
+                "sha256:e7c058e1f360f245f265625b32d3189d7229398ad80a8b6bac459891745de052"
             ],
             "index": "pypi",
-            "version": "==18.2.0"
+            "version": "==18.3.0"
         },
         "flake8": {
             "hashes": [
