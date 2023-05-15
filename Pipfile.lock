@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "61b4a8a7eeca4bef17fb7a87437f565a405cb28ec6c08a4a722333f4ee799abd"
+            "sha256": "94026043d4857a1abb2131d23909b17c7e6cc0fe26f9f0141b9966e761b832cc"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -487,11 +487,11 @@
         },
         "invoke": {
             "hashes": [
-                "sha256:7dcf054c4626b89713da650635c29e9dfeb8a1dd0a14edc60bd3e16f751292ff",
-                "sha256:e86a53046eca453d3e609e7017f65db5f66b947d4d337b60658859eb8c8a80e3"
+                "sha256:a6cc1f06f75bacd0b1e11488fa3bf3e62f85e31f62e2c0172188613ba5b070e2",
+                "sha256:bfc904df1c9e9fe1a881933de661fe054b8db616ff2c4cf78e00407fe473ba5d"
             ],
             "index": "pypi",
-            "version": "==2.1.1"
+            "version": "==2.1.2"
         },
         "markdown-it-py": {
             "hashes": [
@@ -583,11 +583,11 @@
         },
         "platformdirs": {
             "hashes": [
-                "sha256:47692bc24c1958e8b0f13dd727307cff1db103fca36399f457da8e05f222fdc4",
-                "sha256:7954a68d0ba23558d753f73437c55f89027cf8f5108c19844d4b82e5af396335"
+                "sha256:412dae91f52a6f84830f39a8078cecd0e866cb72294a5c66808e74d5e88d251f",
+                "sha256:e2378146f1964972c03c085bb5662ae80b2b8c06226c54b2ff4aa9483e8a13a5"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==3.5.0"
+            "version": "==3.5.1"
         },
         "pluggy": {
             "hashes": [
@@ -807,11 +807,11 @@
         },
         "stevedore": {
             "hashes": [
-                "sha256:2c428d2338976279e8eb2196f7a94910960d9f7ba2f41f3988511e95ca447021",
-                "sha256:bd5a71ff5e5e5f5ea983880e4a1dd1bb47f8feebbb3d95b592398e2f02194771"
+                "sha256:8cc040628f3cea5d7128f2e76cf486b2251a4e543c7b938f58d9a377f6694a2d",
+                "sha256:a54534acf9b89bc7ed264807013b505bf07f74dbe4bcfa37d32bd063870b087c"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==5.0.0"
+            "version": "==5.1.0"
         },
         "toml": {
             "hashes": [
