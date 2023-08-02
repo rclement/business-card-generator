@@ -25,4 +25,4 @@ python-dotenv = "==1.0.0"
 safety = "==2.3.5"
 
 [requires]
-python_version = "3.10.6"
+python_version = "3.11.4"
