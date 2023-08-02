@@ -39,7 +39,7 @@ class BaseCard:
     def __init__(self, params: CardParams) -> None:
         self.params = params
         self.data = self.generate_data(params)
-        self.qrcode = make_qr(self.data)
+        self.qrcode = make_qr(self.data, encoding="utf-8")
 
     def generate_data(self, params: CardParams) -> str:
         raise NotImplementedError  # pragma: no cover
