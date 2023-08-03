@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Generate QR codes with Unicode (UTF-8) encoding
 
 ### Changed
+- Vendor external CSS stylesheet
 - Use Python 3.11.4
 - Update dependencies
 
