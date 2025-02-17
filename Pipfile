@@ -13,7 +13,7 @@ segno = "==1.6.0"
 whitenoise = "==6.6.0"
 
 [dev-packages]
-bandit = "==1.7.5"
+bandit = "==1.8.3"
 black = "==22.12.0"
 faker = "==19.13.0"
 flake8 = "==6.1.0"
