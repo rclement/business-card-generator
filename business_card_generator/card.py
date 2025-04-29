@@ -14,6 +14,7 @@ class CardParams(BaseModel):
     job: Optional[str] = None
     email: Optional[EmailStr] = None
     phone: Optional[str] = None
+    cellphone: Optional[str] = None
     website: Optional[HttpUrl] = None
     picture: Optional[HttpUrl] = None
     street: Optional[str] = None
@@ -76,6 +77,7 @@ class VCard(BaseCard):
             title=params.job,
             email=params.email,
             phone=params.phone,
+            cellphone=params.cellphone,
             url=params.website,
             photo_uri=params.picture,
             street=params.street,
@@ -100,6 +102,7 @@ class MeCard(BaseCard):
             memo=params.company,
             email=params.email,
             phone=params.phone,
+            cellphone=params.cellphone,
             url=params.website,
             houseno=params.street,
             city=params.city,
