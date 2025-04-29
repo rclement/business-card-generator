@@ -209,6 +209,21 @@
                     </span>
                   </div>
                 </div>
+
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="CellPhone"
+                      name="cellphone"
+                      value="{{ request.args.cellphone }}"
+                    >
+                    <span class="icon is-small is-left">
+                      <img src="{{ url_for('static', filename='icons/phone.svg') }}">
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
