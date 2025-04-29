@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Proper form fields data validation
+- Cellphone field (only available for vCard format) (thanks @zerabba)
 
 ### Changed
 - Use Python 3.13.9

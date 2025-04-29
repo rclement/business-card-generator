@@ -14,6 +14,7 @@ class CardParams(BaseModel):
     job: str | None = None
     email: EmailStr | None = None
     phone: str | None = None
+    cellphone: str | None = None
     website: HttpUrl | None = None
     picture: HttpUrl | None = None
     street: str | None = None
@@ -77,6 +78,7 @@ class VCard(BaseCard):
             title=params.job,
             email=params.email,
             phone=params.phone,
+            cellphone=params.cellphone,
             url=str(params.website) if params.website else None,
             photo_uri=str(params.picture) if params.picture else None,
             street=params.street,

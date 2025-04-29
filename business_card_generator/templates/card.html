@@ -64,6 +64,15 @@
                 </div>
                 {% endif %}
 
+                {% if params.cellphone %}
+                <div class="block icon-text">
+                  <span class="icon">
+                    <img src="{{ url_for('static', filename='icons/smartphone.svg') }}">
+                  </span>
+                  <a class="p-tel" href="tel:{{ params.cellphone }}">{{ params.cellphone }}</a>
+                </div>
+                {% endif %}
+
                 {% if params.website %}
                 <div class="block icon-text">
                   <span class="icon">
