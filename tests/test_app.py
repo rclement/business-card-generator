@@ -221,7 +221,7 @@ def test_get_vcard_svg_success(
     assert data.startswith(
         '<?xml version="1.0" encoding="utf-8"?>\n'
         '<svg xmlns="http://www.w3.org/2000/svg"'
-        ' width="292.0" height="292.0" class="vcard">'
+        ' width="308.0" height="308.0" class="vcard">'
     )
     assert data.endswith("</svg>\n")
 
@@ -316,6 +316,7 @@ def test_get_vcard_vcf_success(
         f"ORG:{company}\r\n"
         f"EMAIL:{card_params['email']}\r\n"
         f"TEL:{card_params['phone']}\r\n"
+        f"TEL;TYPE=CELL:{card_params['cellphone']}\r\n"
         f"URL:{card_params['website']}\r\n"
         f"TITLE:{card_params['job']}\r\n"
         f"PHOTO;VALUE=uri:{card_params['picture']}\r\n"

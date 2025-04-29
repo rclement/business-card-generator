@@ -41,6 +41,7 @@ def card_params(faker: Faker) -> dict[str, str]:
         job=faker.job(),
         email=faker.email(),
         phone=faker.phone_number(),
+        cellphone=faker.phone_number(),
         website=faker.url(),
         picture=faker.image_url(),
         street=faker.street_address(),
