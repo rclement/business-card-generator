@@ -106,7 +106,7 @@ def get_mecard_vcf() -> Response:
 
 
 def create_app(env_file: Optional[str] = ".env") -> Flask:
-    settings = Settings(_env_file=env_file)  # type: ignore[call-arg]
+    settings = Settings(_env_file=env_file)
 
     app = Flask(__name__)
     app.config.from_object(settings)

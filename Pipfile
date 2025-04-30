@@ -4,25 +4,26 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "==3.0.0"
-gunicorn = "==21.2.0"
-honcho = "==1.1.0"
-jinja2 = "==3.1.2"
-pydantic = {extras = ["email"],version = "==1.10.13"}
-segno = "==1.6.0"
-whitenoise = "==6.6.0"
+flask = "==3.1.0"
+gunicorn = "==23.0.0"
+honcho = "==2.0.0"
+jinja2 = "==3.1.6"
+pydantic = {extras = ["email"],version = "==2.11.4"}
+pydantic-settings = "==2.9.1"
+segno = "==1.6.6"
+whitenoise = "==6.9.0"
 
 [dev-packages]
-bandit = "==1.7.5"
-black = "==22.12.0"
-faker = "==19.13.0"
-flake8 = "==6.1.0"
+bandit = "==1.8.3"
+black = "==25.1.0"
+faker = "==37.1.0"
+flake8 = "==7.2.0"
 invoke = "==2.2.0"
-mypy = "==1.7.1"
-pytest = "==7.4.4"
-pytest-cov = "==4.1.0"
-python-dotenv = "==1.0.0"
-safety = "==2.3.5"
+mypy = "==1.15.0"
+pip-audit = "==2.9.0"
+pytest = "==8.3.5"
+pytest-cov = "==6.1.1"
+python-dotenv = "==1.1.0"
 
 [requires]
 python_version = "3.11.4"

@@ -1,7 +1,7 @@
 from datetime import date
 from io import BytesIO
 from typing import Any, Optional
-from pydantic import BaseModel, EmailStr, HttpUrl, validator
+from pydantic import BaseModel, EmailStr, HttpUrl, field_validator
 from segno import QRCode, helpers, make_qr
 
 
@@ -25,7 +25,8 @@ class CardParams(BaseModel):
     def __init__(__pydantic_self__, **data: Any) -> None:
         super().__init__(**data)
 
-    @validator("birthday", "email", "website", "picture", pre=True)
+    @field_validator("birthday", "email", "website", "picture", mode="before")
+    @classmethod
     def validate_empty(cls, value: Optional[str]) -> Optional[str]:
         return value or None
 
@@ -76,8 +77,8 @@ class VCard(BaseCard):
             title=params.job,
             email=params.email,
             phone=params.phone,
-            url=params.website,
-            photo_uri=params.picture,
+            url=str(params.website) if params.website else None,
+            photo_uri=str(params.picture) if params.picture else None,
             street=params.street,
             city=params.city,
             region=params.state,
@@ -100,7 +101,7 @@ class MeCard(BaseCard):
             memo=params.company,
             email=params.email,
             phone=params.phone,
-            url=params.website,
+            url=str(params.website) if params.website else None,
             houseno=params.street,
             city=params.city,
             zipcode=params.zipcode,
