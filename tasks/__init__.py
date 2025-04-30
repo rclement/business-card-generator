@@ -9,7 +9,7 @@ tests_path = "tests"
 
 @task
 def audit(ctx):
-    ctx.run("safety check --full-report", pty=True)
+    ctx.run("pip-audit", echo=True, pty=True)
 
 
 @task
