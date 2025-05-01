@@ -69,10 +69,9 @@ If you do not trust the official deployment, feel free to deploy your own!
 
 ```bash
 cp .example.env .env
-pipenv install -d
-pipenv shell
-inv qa
-flask run
+uv sync
+uv run inv qa
+uv run flask run
 ```
 
 ### VSCode
