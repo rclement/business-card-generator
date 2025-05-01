@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update dependencies
 - Replace usage of `safety` with `pip-audit`
 - Migrate to `pydantic` version 2
+- Use `uv` package manager instead of `pipenv`
 
 ## [0.3.0] - 2023-08-03
 ### Fixed
