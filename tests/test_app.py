@@ -137,7 +137,7 @@ def test_get_vcard_svg_success(
     assert response.status_code == HTTPStatus.OK
     assert (
         response.headers["content-type"]
-        == f'{mimetypes.types_map[".svg"]}; charset=utf-8'
+        == f"{mimetypes.types_map['.svg']}; charset=utf-8"
     )
     assert response.headers["content-disposition"] == "inline; filename=vcard.svg"
 
@@ -217,7 +217,7 @@ def test_get_vcard_vcf_success(
     assert response.status_code == HTTPStatus.OK
     assert (
         response.headers["content-type"]
-        == f'{mimetypes.types_map[".vcf"]}; charset=utf-8'
+        == f"{mimetypes.types_map['.vcf']}; charset=utf-8"
     )
     assert response.headers["content-disposition"] == "inline; filename=vcard.vcf"
 
@@ -227,21 +227,21 @@ def test_get_vcard_vcf_success(
     assert (
         data == "BEGIN:VCARD\r\n"
         "VERSION:3.0\r\n"
-        f'N:{card_params["lastname"]};{card_params["firstname"]}\r\n'
-        f'FN:{card_params["firstname"]} {card_params["lastname"]}\r\n'
+        f"N:{card_params['lastname']};{card_params['firstname']}\r\n"
+        f"FN:{card_params['firstname']} {card_params['lastname']}\r\n"
         f"ORG:{company}\r\n"
-        f'EMAIL:{card_params["email"]}\r\n'
-        f'TEL:{card_params["phone"]}\r\n'
-        f'URL:{card_params["website"]}\r\n'
-        f'TITLE:{card_params["job"]}\r\n'
-        f'PHOTO;VALUE=uri:{card_params["picture"]}\r\n'
-        f'NICKNAME:{card_params["nickname"]}\r\n'
-        f'ADR:;;{card_params["street"]};'
-        f'{card_params["city"]};'
-        f'{card_params["state"]};'
-        f'{card_params["zipcode"]};'
-        f'{card_params["country"]}\r\n'
-        f'BDAY:{card_params["birthday"]}\r\n'
+        f"EMAIL:{card_params['email']}\r\n"
+        f"TEL:{card_params['phone']}\r\n"
+        f"URL:{card_params['website']}\r\n"
+        f"TITLE:{card_params['job']}\r\n"
+        f"PHOTO;VALUE=uri:{card_params['picture']}\r\n"
+        f"NICKNAME:{card_params['nickname']}\r\n"
+        f"ADR:;;{card_params['street']};"
+        f"{card_params['city']};"
+        f"{card_params['state']};"
+        f"{card_params['zipcode']};"
+        f"{card_params['country']}\r\n"
+        f"BDAY:{card_params['birthday']}\r\n"
         "END:VCARD\r\n"
     )
 
@@ -257,7 +257,7 @@ def test_get_mecard_svg_success(
     assert response.status_code == HTTPStatus.OK
     assert (
         response.headers["content-type"]
-        == f'{mimetypes.types_map[".svg"]}; charset=utf-8'
+        == f"{mimetypes.types_map['.svg']}; charset=utf-8"
     )
     assert response.headers["content-disposition"] == "inline; filename=mecard.svg"
 
@@ -296,7 +296,7 @@ def test_get_mecard_vcf_success(
     assert response.status_code == HTTPStatus.OK
     assert (
         response.headers["content-type"]
-        == f'{mimetypes.types_map[".vcf"]}; charset=utf-8'
+        == f"{mimetypes.types_map['.vcf']}; charset=utf-8"
     )
     assert response.headers["content-disposition"] == "inline; filename=mecard.vcf"
 
@@ -304,17 +304,17 @@ def test_get_mecard_vcf_success(
     data = response.get_data().decode("utf-8")
     assert len(data) > 0
     assert (
-        data == f'MECARD:N:{card_params["lastname"]},{card_params["firstname"]};'
-        f'TEL:{card_params["phone"]};'
-        f'EMAIL:{card_params["email"]};'
-        f'NICKNAME:{card_params["nickname"]};'
-        f'BDAY:{date.fromisoformat(card_params["birthday"]).strftime("%Y%m%d")};'
+        data == f"MECARD:N:{card_params['lastname']},{card_params['firstname']};"
+        f"TEL:{card_params['phone']};"
+        f"EMAIL:{card_params['email']};"
+        f"NICKNAME:{card_params['nickname']};"
+        f"BDAY:{date.fromisoformat(card_params['birthday']).strftime('%Y%m%d')};"
         f"URL:{website};"
-        f'ADR:,,{card_params["street"]},'
-        f'{card_params["city"]},'
-        f'{card_params["state"]},'
-        f'{card_params["zipcode"]},'
-        f'{card_params["country"]};'
-        f'MEMO:{card_params["company"]};'
+        f"ADR:,,{card_params['street']},"
+        f"{card_params['city']},"
+        f"{card_params['state']},"
+        f"{card_params['zipcode']},"
+        f"{card_params['country']};"
+        f"MEMO:{card_params['company']};"
         ";"
     )

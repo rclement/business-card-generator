@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replace usage of `safety` with `pip-audit`
 - Migrate to `pydantic` version 2
 - Use `uv` package manager instead of `pipenv`
+- Use `ruff` instead of `black` and `flake8`
 
 ## [0.3.0] - 2023-08-03
 ### Fixed
