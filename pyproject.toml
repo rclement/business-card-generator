@@ -31,15 +31,14 @@ Changelog = "https://github.com/rclement/business-card-generator/blob/main/CHANG
 [dependency-groups]
 dev = [
     "bandit==1.8.3",
-    "black==25.1.0",
     "faker==37.1.0",
-    "flake8==7.2.0",
     "invoke==2.2.0",
     "mypy==1.15.0",
     "pip-audit==2.9.0",
     "pytest==8.3.5",
     "pytest-cov==6.1.1",
     "python-dotenv==1.1.0",
+    "ruff==0.11.8",
 ]
 
 [tool.hatch.version]
