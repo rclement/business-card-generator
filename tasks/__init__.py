@@ -34,7 +34,7 @@ def security_check(ctx: Context):
 @task
 def test(ctx: Context):
     ctx.run(
-        f"py.test -v --cov={app_path} --cov={tests_path} --cov-branch --cov-report=term-missing --junitxml=test-report.xml {tests_path}",
+        f"py.test -v --cov={app_path} --cov={tests_path} --cov-branch --cov-report=term-missing {tests_path}",
         echo=True,
         pty=True,
     )
