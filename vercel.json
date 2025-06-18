@@ -1,8 +1,10 @@
 {
-  "builds": [
-    { "src": "business_card_generator/wsgi.py", "use": "@vercel/python" }
-  ],
-  "routes": [
-    { "src": "(.*)", "dest": "business_card_generator/wsgi.py"}
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "python3 -m pip install uv && python3 -m uv pip install . --target /build",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "business_card_generator/wsgi.py"
+    }
   ]
 }
