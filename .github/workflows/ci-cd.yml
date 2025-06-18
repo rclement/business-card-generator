@@ -172,8 +172,6 @@ jobs:
         with:
           enable-cache: true
           cache-dependency-glob: "uv.lock"
-      - name: Generate requirements.txt
-        run: uv export --locked --no-emit-project --no-default-groups --no-hashes --format requirements.txt > requirements.txt
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Deploy to Vercel

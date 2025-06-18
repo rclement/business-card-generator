@@ -2,6 +2,5 @@
 !business_card_generator
 !LICENSE
 !pyproject.toml
-!requirements.txt
 !uv.lock
 !vercel.json
