@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Code coverage reporting without using Codecov service
 
 ### Changed
-- Use Python 3.13.3
+- Use Python 3.13.5
 - Update dependencies
 - Replace usage of `safety` with `pip-audit`
 - Migrate to `pydantic` version 2
