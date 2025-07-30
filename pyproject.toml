@@ -31,7 +31,7 @@ Changelog = "https://github.com/rclement/business-card-generator/blob/main/CHANG
 [dependency-groups]
 dev = [
     "bandit==1.8.6",
-    "faker==37.4.2",
+    "faker==37.5.3",
     "invoke==2.2.0",
     "mypy==1.17.0",
     "pip-audit==2.9.0",
