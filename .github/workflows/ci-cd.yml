@@ -60,7 +60,7 @@ jobs:
           cache-dependency-glob: "uv.lock"
       - name: Install dependencies
         run: uv sync --all-extras --dev
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: coverage
       - name: Generate Markdown code coverage report
