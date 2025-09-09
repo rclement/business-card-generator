@@ -80,7 +80,7 @@ requires-dist = [
     { name = "pydantic", extras = ["email"], specifier = "==2.11.7" },
     { name = "pydantic-settings", specifier = "==2.10.1" },
     { name = "segno", specifier = "==1.6.6" },
-    { name = "whitenoise", specifier = "==6.9.0" },
+    { name = "whitenoise", specifier = "==6.10.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -875,9 +875,9 @@ wheels = [
 
 [[package]]
 name = "whitenoise"
-version = "6.9.0"
+version = "6.10.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/b9/cf/c15c2f21aee6b22a9f6fc9be3f7e477e2442ec22848273db7f4eb73d6162/whitenoise-6.9.0.tar.gz", hash = "sha256:8c4a7c9d384694990c26f3047e118c691557481d624f069b7f7752a2f735d609", size = 25920, upload-time = "2025-02-06T22:16:34.957Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/27/9a/4f4b84ff1f3a5c3cbc8070b6ecbbab6cd121c385244c9d24d80bb284190f/whitenoise-6.10.0.tar.gz", hash = "sha256:7b7e53de65d749cb1ce4a7100e751d9742e323b52746f9f93944c0d348ea2d02", size = 26412, upload-time = "2025-09-09T11:07:24.694Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/64/b2/2ce9263149fbde9701d352bda24ea1362c154e196d2fda2201f18fc585d7/whitenoise-6.9.0-py3-none-any.whl", hash = "sha256:c8a489049b7ee9889617bb4c274a153f3d979e8f51d2efd0f5b403caf41c57df", size = 20161, upload-time = "2025-02-06T22:16:32.589Z" },
+    { url = "https://files.pythonhosted.org/packages/cb/3b/4fa26e02935334fa0eb1422c938b1db796c55de7a432cc86b9d8cf97260c/whitenoise-6.10.0-py3-none-any.whl", hash = "sha256:bad74a40b33b055ba59731b6048dd08d5647f273b72bef922aa43ddd287b02da", size = 20194, upload-time = "2025-09-09T11:07:23.544Z" },
 ]
