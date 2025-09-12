@@ -33,7 +33,7 @@ dev = [
     "bandit==1.8.6",
     "faker==37.6.0",
     "invoke==2.2.0",
-    "mypy==1.17.1",
+    "mypy==1.18.1",
     "pip-audit==2.9.0",
     "pytest==8.4.2",
     "pytest-cov==7.0.0",
