@@ -1,4 +1,4 @@
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 version = tuple(int(v) for v in __version__.split("."))
 __name__ = "Business Card Generator"
 __description__ = (
