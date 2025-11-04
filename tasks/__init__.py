@@ -13,9 +13,7 @@ def format(ctx: Context) -> None:
 
 @task
 def audit(ctx: Context) -> None:
-    ignored_vulns = [
-        "GHSA-4xh5-x5gv-qwph",  # pip<=25.2 affected, no resolution yet
-    ]
+    ignored_vulns = []
     options = [f"--ignore-vuln {vuln}" for vuln in ignored_vulns]
     ctx.run(f"pip-audit {' '.join(options)}", echo=True, pty=True)
 
