@@ -3,7 +3,7 @@ import pytest
 
 from datetime import date
 from http import HTTPStatus
-from typing import Any, Dict
+from typing import Any
 from flask import Flask, url_for
 from flask.testing import FlaskClient
 
@@ -73,7 +73,7 @@ def test_get_home_success(app: Flask, app_client: FlaskClient) -> None:
 def test_get_home_with_params(
     app: Flask,
     app_client: FlaskClient,
-    card_params: Dict[str, str],
+    card_params: dict[str, str],
     card_type: str,
 ) -> None:
     params = dict(
@@ -96,7 +96,7 @@ def test_get_home_with_params(
 def test_get_card_success(
     app: Flask,
     app_client: FlaskClient,
-    card_params: Dict[str, str],
+    card_params: dict[str, str],
     card_type: str,
 ) -> None:
     params = dict(
@@ -130,7 +130,7 @@ def test_get_card_success(
 
 
 def test_get_vcard_svg_success(
-    app_client: FlaskClient, card_params: Dict[str, str]
+    app_client: FlaskClient, card_params: dict[str, str]
 ) -> None:
     response = app_client.get("/vcard.svg", query_string=card_params)
 
@@ -170,7 +170,7 @@ def test_get_vcard_svg_success(
     ),
 )
 def test_get_vcard_svg_optional_empty_parameter(
-    app_client: FlaskClient, card_params: Dict[str, str], param: str
+    app_client: FlaskClient, card_params: dict[str, str], param: str
 ) -> None:
     card_params[param] = ""
     response = app_client.get("/vcard.svg", query_string=card_params)
@@ -185,7 +185,7 @@ def test_get_vcard_svg_optional_empty_parameter(
     ),
 )
 def test_get_vcard_svg_invalid_parameter(
-    app_client: FlaskClient, card_params: Dict[str, str], key: str, value: Any
+    app_client: FlaskClient, card_params: dict[str, str], key: str, value: Any
 ) -> None:
     card_params[key] = value
     response = app_client.get("/vcard.svg", query_string=card_params)
@@ -196,7 +196,7 @@ def test_get_vcard_svg_invalid_parameter(
 
 
 def test_get_vcard_png_success(
-    app_client: FlaskClient, card_params: Dict[str, str]
+    app_client: FlaskClient, card_params: dict[str, str]
 ) -> None:
     response = app_client.get("/vcard.png", query_string=card_params)
 
@@ -210,7 +210,7 @@ def test_get_vcard_png_success(
 
 
 def test_get_vcard_vcf_success(
-    app_client: FlaskClient, card_params: Dict[str, str]
+    app_client: FlaskClient, card_params: dict[str, str]
 ) -> None:
     response = app_client.get("/vcard.vcf", query_string=card_params)
 
@@ -250,7 +250,7 @@ def test_get_vcard_vcf_success(
 
 
 def test_get_mecard_svg_success(
-    app_client: FlaskClient, card_params: Dict[str, str]
+    app_client: FlaskClient, card_params: dict[str, str]
 ) -> None:
     response = app_client.get("/mecard.svg", query_string=card_params)
 
@@ -275,7 +275,7 @@ def test_get_mecard_svg_success(
 
 
 def test_get_mecard_png_success(
-    app_client: FlaskClient, card_params: Dict[str, str]
+    app_client: FlaskClient, card_params: dict[str, str]
 ) -> None:
     response = app_client.get("/mecard.png", query_string=card_params)
 
@@ -289,7 +289,7 @@ def test_get_mecard_png_success(
 
 
 def test_get_mecard_vcf_success(
-    app_client: FlaskClient, card_params: Dict[str, str]
+    app_client: FlaskClient, card_params: dict[str, str]
 ) -> None:
     response = app_client.get("/mecard.vcf", query_string=card_params)
 

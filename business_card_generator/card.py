@@ -1,6 +1,6 @@
 from datetime import date
 from io import BytesIO
-from typing import Any, Optional
+from typing import Any
 from pydantic import BaseModel, EmailStr, HttpUrl, field_validator
 from segno import QRCode, helpers, make_qr
 
@@ -8,26 +8,26 @@ from segno import QRCode, helpers, make_qr
 class CardParams(BaseModel):
     firstname: str
     lastname: str
-    nickname: Optional[str] = None
-    birthday: Optional[date] = None
-    company: Optional[str] = None
-    job: Optional[str] = None
-    email: Optional[EmailStr] = None
-    phone: Optional[str] = None
-    website: Optional[HttpUrl] = None
-    picture: Optional[HttpUrl] = None
-    street: Optional[str] = None
-    city: Optional[str] = None
-    zipcode: Optional[str] = None
-    state: Optional[str] = None
-    country: Optional[str] = None
+    nickname: str | None = None
+    birthday: date | None = None
+    company: str | None = None
+    job: str | None = None
+    email: EmailStr | None = None
+    phone: str | None = None
+    website: HttpUrl | None = None
+    picture: HttpUrl | None = None
+    street: str | None = None
+    city: str | None = None
+    zipcode: str | None = None
+    state: str | None = None
+    country: str | None = None
 
     def __init__(__pydantic_self__, **data: Any) -> None:
         super().__init__(**data)
 
     @field_validator("birthday", "email", "website", "picture", mode="before")
     @classmethod
-    def validate_empty(cls, value: Optional[str]) -> Optional[str]:
+    def validate_empty(cls, value: str | None) -> str | None:
         return value or None
 
 

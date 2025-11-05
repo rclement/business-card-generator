@@ -1,7 +1,6 @@
 import mimetypes
 
 from http import HTTPStatus
-from typing import Optional
 from flask import Blueprint, Flask, abort, redirect, render_template, request, send_file
 from pydantic import ValidationError
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -105,7 +104,7 @@ def get_mecard_vcf() -> Response:
 # ------------------------------------------------------------------------------
 
 
-def create_app(env_file: Optional[str] = ".env") -> Flask:
+def create_app(env_file: str | None = ".env") -> Flask:
     settings = Settings(_env_file=env_file)
 
     app = Flask(__name__)
@@ -129,7 +128,7 @@ def create_app(env_file: Optional[str] = ".env") -> Flask:
     )
 
     @app.before_request
-    def _force_https() -> Optional[Response]:
+    def _force_https() -> Response | None:
         if settings.force_https and request.url.startswith("http://"):
             https_url = request.url.replace("http://", "https://", 1)
             return redirect(https_url)
