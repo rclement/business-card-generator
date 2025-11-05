@@ -1,7 +1,7 @@
 import os
 import pytest
 
-from typing import Dict, Generator
+from typing import Generator
 from faker import Faker
 from flask import Flask
 from flask.testing import FlaskClient
@@ -31,7 +31,7 @@ def app_client(app: Flask) -> Generator[FlaskClient, None, None]:
 
 
 @pytest.fixture(scope="function")
-def card_params(faker: Faker) -> Dict[str, str]:
+def card_params(faker: Faker) -> dict[str, str]:
     return dict(
         firstname=faker.first_name(),
         lastname=faker.last_name(),
