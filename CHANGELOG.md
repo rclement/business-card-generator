@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1] - 2025-11-06
+### Fixed
+- Typo for cellphone field display
+- Display errors and field values with GET to home form
+
 ## [0.5.0] - 2025-11-06
 ### Added
 - Proper form fields data validation
@@ -48,7 +53,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for QR-Code vCard and MeCard
 - Export format support for VCF, SVG, PNG
 
-[Unreleased]: https://github.com/rclement/business-card-generator/compare/0.5.0...HEAD
+[Unreleased]: https://github.com/rclement/business-card-generator/compare/0.5.1...HEAD
+[0.5.1]: https://github.com/rclement/business-card-generator/compare/0.5.0...0.5.1
 [0.5.0]: https://github.com/rclement/business-card-generator/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/rclement/business-card-generator/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/rclement/business-card-generator/compare/0.2.0...0.3.0
