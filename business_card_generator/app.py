@@ -55,7 +55,9 @@ def get_home() -> str:
     return render_template(
         "home.html",
         card_type=card_type,
-        card_params=card_params.model_dump(exclude_none=True) if card_params else None,
+        card_params=card_params.model_dump(exclude_none=True)
+        if card_params
+        else input_data,
         field_errors=field_errors,
     )
 
