@@ -1,5 +1,15 @@
 {% extends "_base.html" %}
 
+{%- macro field_error(field_name) -%}
+{%- if field_errors and field_errors.get(field_name) %}
+<p class="help is-danger">{{ field_errors[field_name] }}</p>
+{%- endif -%}
+{%- endmacro -%}
+
+{%- macro input_class(field_name) -%}
+input{% if field_errors and field_errors.get(field_name) %} is-danger{% endif %}
+{%- endmacro -%}
+
 {%- block content %}
 <section class="hero is-fullheight">
   <div class="hero-body">
@@ -16,7 +26,7 @@
 
           <hr>
 
-          <form method="GET" action="{{ url_for('views.get_card') }}">
+          <form method="POST" action="{{ url_for('views.post_home') }}">
             <div class="field is-horizontal">
               <div class="field-label">
                 <label class="label">Card Type</label>
@@ -28,7 +38,7 @@
                       type="radio"
                       name="card_type"
                       value="vcard"
-                      {%- if not request.args.card_type or request.args.card_type == 'vcard' %} checked{% endif %}
+                      {%- if not card_type or card_type == 'vcard' %} checked{% endif %}
                     >
                     vCard
                   </label>
@@ -37,7 +47,7 @@
                       type="radio"
                       name="card_type"
                       value="mecard"
-                      {%- if request.args.card_type == 'mecard' %} checked{% endif %}
+                      {%- if card_type == 'mecard' %} checked{% endif %}
                     >
                     MeCard
                   </label>
@@ -53,48 +63,51 @@
                 <div class="field">
                   <div class="control has-icons-left">
                     <input
-                      class="input"
+                      class="{{ input_class('firstname') }}"
                       type="text"
                       placeholder="First Name"
                       name="firstname"
-                      value="{{ request.args.firstname }}"
+                      value="{{ card_params.firstname if card_params else '' }}"
                       required
                     >
                     <span class="icon is-small is-left">
                       <img src="{{ url_for('static', filename='icons/user.svg') }}">
                     </span>
                   </div>
+                  {{ field_error('firstname') }}
                 </div>
 
                 <div class="field">
                   <div class="control has-icons-left">
                     <input
-                      class="input"
+                      class="{{ input_class('lastname') }}"
                       type="text"
                       placeholder="Last Name"
                       name="lastname"
-                      value="{{ request.args.lastname }}"
+                      value="{{ card_params.lastname if card_params else '' }}"
                       required
                     >
                     <span class="icon is-small is-left">
                       <img src="{{ url_for('static', filename='icons/user.svg') }}">
                     </span>
                   </div>
+                  {{ field_error('lastname') }}
                 </div>
 
                 <div class="field">
                   <div class="control has-icons-left">
                     <input
-                      class="input"
+                      class="{{ input_class('nickname') }}"
                       type="text"
                       placeholder="Nickname"
                       name="nickname"
-                      value="{{ request.args.nickname }}"
+                      value="{{ card_params.nickname if card_params else '' }}"
                     >
                     <span class="icon is-small is-left">
                       <img src="{{ url_for('static', filename='icons/user.svg') }}">
                     </span>
                   </div>
+                  {{ field_error('nickname') }}
                 </div>
               </div>
             </div>
@@ -105,16 +118,17 @@
                 <div class="field">
                   <div class="control has-icons-left">
                     <input
-                      class="input"
+                      class="{{ input_class('picture') }}"
                       type="text"
                       placeholder="Picture URL"
                       name="picture"
-                      value="{{ request.args.picture }}"
+                      value="{{ card_params.picture if card_params else '' }}"
                     >
                     <span class="icon is-small is-left">
                       <img src="{{ url_for('static', filename='icons/image.svg') }}">
                     </span>
                   </div>
+                  {{ field_error('picture') }}
                 </div>
               </div>
             </div>
@@ -127,15 +141,16 @@
                 <div class="field">
                   <div class="control has-icons-left">
                     <input
-                      class="input"
+                      class="{{ input_class('birthday') }}"
                       type="date"
                       name="birthday"
-                      value="{{ request.args.birthday }}"
+                      value="{{ card_params.birthday if card_params else '' }}"
                     >
                     <span class="icon is-small is-left">
                       <img src="{{ url_for('static', filename='icons/calendar.svg') }}">
                     </span>
                   </div>
+                  {{ field_error('birthday') }}
                 </div>
               </div>
             </div>
@@ -148,31 +163,33 @@
                 <div class="field">
                   <div class="control has-icons-left">
                     <input
-                      class="input"
+                      class="{{ input_class('company') }}"
                       type="text"
                       placeholder="Company"
                       name="company"
-                      value="{{ request.args.company }}"
+                      value="{{ card_params.company if card_params else '' }}"
                     >
                     <span class="icon is-small is-left">
                       <img src="{{ url_for('static', filename='icons/building.svg') }}">
                     </span>
                   </div>
+                  {{ field_error('company') }}
                 </div>
 
                 <div class="field">
                   <div class="control has-icons-left">
                     <input
-                      class="input"
+                      class="{{ input_class('job') }}"
                       type="text"
                       placeholder="Job"
                       name="job"
-                      value="{{ request.args.job }}"
+                      value="{{ card_params.job if card_params else '' }}"
                     >
                     <span class="icon is-small is-left">
                       <img src="{{ url_for('static', filename='icons/briefcase.svg') }}">
                     </span>
                   </div>
+                  {{ field_error('job') }}
                 </div>
               </div>
             </div>
@@ -183,31 +200,33 @@
                 <div class="field">
                   <div class="control has-icons-left">
                     <input
-                      class="input"
+                      class="{{ input_class('email') }}"
                       type="email"
                       placeholder="Email"
                       name="email"
-                      value="{{ request.args.email }}"
+                      value="{{ card_params.email if card_params else '' }}"
                     >
                     <span class="icon is-small is-left">
                       <img src="{{ url_for('static', filename='icons/at-sign.svg') }}">
                     </span>
                   </div>
+                  {{ field_error('email') }}
                 </div>
 
                 <div class="field">
                   <div class="control has-icons-left">
                     <input
-                      class="input"
+                      class="{{ input_class('phone') }}"
                       type="text"
                       placeholder="Phone"
                       name="phone"
-                      value="{{ request.args.phone }}"
+                      value="{{ card_params.phone if card_params else '' }}"
                     >
                     <span class="icon is-small is-left">
                       <img src="{{ url_for('static', filename='icons/phone.svg') }}">
                     </span>
                   </div>
+                  {{ field_error('phone') }}
                 </div>
               </div>
             </div>
@@ -218,16 +237,17 @@
                 <div class="field">
                   <div class="control has-icons-left">
                     <input
-                      class="input"
+                      class="{{ input_class('website') }}"
                       type="text"
                       placeholder="Website"
                       name="website"
-                      value="{{ request.args.website }}"
+                      value="{{ card_params.website if card_params else '' }}"
                     >
                     <span class="icon is-small is-left">
                       <img src="{{ url_for('static', filename='icons/link.svg') }}">
                     </span>
                   </div>
+                  {{ field_error('website') }}
                 </div>
               </div>
             </div>
@@ -240,16 +260,17 @@
                 <div class="field">
                   <div class="control has-icons-left">
                     <input
-                      class="input"
+                      class="{{ input_class('street') }}"
                       type="text"
                       placeholder="Street"
                       name="street"
-                      value="{{ request.args.street }}"
+                      value="{{ card_params.street if card_params else '' }}"
                     >
                     <span class="icon is-small is-left">
                       <img src="{{ url_for('static', filename='icons/map-pin.svg') }}">
                     </span>
                   </div>
+                  {{ field_error('street') }}
                 </div>
               </div>
             </div>
@@ -260,31 +281,33 @@
                 <div class="field">
                   <div class="control has-icons-left">
                     <input
-                      class="input"
+                      class="{{ input_class('city') }}"
                       type="text"
                       placeholder="City"
                       name="city"
-                      value="{{ request.args.city }}"
+                      value="{{ card_params.city if card_params else '' }}"
                     >
                     <span class="icon is-small is-left">
                       <img src="{{ url_for('static', filename='icons/map-pin.svg') }}">
                     </span>
                   </div>
+                  {{ field_error('city') }}
                 </div>
 
                 <div class="field">
                   <div class="control has-icons-left">
                     <input
-                      class="input"
+                      class="{{ input_class('zipcode') }}"
                       type="text"
                       placeholder="Zipcode"
                       name="zipcode"
-                      value="{{ request.args.zipcode }}"
+                      value="{{ card_params.zipcode if card_params else '' }}"
                     >
                     <span class="icon is-small is-left">
                       <img src="{{ url_for('static', filename='icons/map-pin.svg') }}">
                     </span>
                   </div>
+                  {{ field_error('zipcode') }}
                 </div>
               </div>
             </div>
@@ -295,31 +318,33 @@
                 <div class="field">
                   <div class="control has-icons-left">
                     <input
-                      class="input"
+                      class="{{ input_class('state') }}"
                       type="text"
                       placeholder="State"
                       name="state"
-                      value="{{ request.args.state }}"
+                      value="{{ card_params.state if card_params else '' }}"
                     >
                     <span class="icon is-small is-left">
                       <img src="{{ url_for('static', filename='icons/map-pin.svg') }}">
                     </span>
                   </div>
+                  {{ field_error('state') }}
                 </div>
 
                 <div class="field">
                   <div class="control has-icons-left">
                     <input
-                      class="input"
+                      class="{{ input_class('country') }}"
                       type="text"
                       placeholder="Country"
                       name="country"
-                      value="{{ request.args.country }}"
+                      value="{{ card_params.country if card_params else '' }}"
                     >
                     <span class="icon is-small is-left">
                       <img src="{{ url_for('static', filename='icons/map-pin.svg') }}">
                     </span>
                   </div>
+                  {{ field_error('country') }}
                 </div>
               </div>
             </div>
