@@ -4,7 +4,7 @@ import pytest
 from datetime import date
 from http import HTTPStatus
 from typing import Any
-from flask import Flask, url_for
+from flask import url_for
 from flask.testing import FlaskClient
 
 
@@ -19,15 +19,14 @@ def enable_force_https(monkeypatch: pytest.MonkeyPatch) -> None:
 # ------------------------------------------------------------------------------
 
 
-def test_get_home_https_redirect(
-    enable_force_https: None, app_client: FlaskClient
-) -> None:
+@pytest.mark.usefixtures("enable_force_https")
+def test_get_home_https_redirect(app_client: FlaskClient) -> None:
     response = app_client.get("/", follow_redirects=False)
     assert response.status_code == HTTPStatus.FOUND
     assert response.location.startswith("https://")
 
 
-def test_get_home_success(app: Flask, app_client: FlaskClient) -> None:
+def test_get_home_success(app_client: FlaskClient) -> None:
     from business_card_generator import __about__
 
     response = app_client.get("/")
@@ -39,8 +38,8 @@ def test_get_home_success(app: Flask, app_client: FlaskClient) -> None:
     assert __about__.__version__ in data
     assert __about__.__description__ in data
 
-    assert '<form method="GET"' in data
-    assert url_for("views.get_card") in data
+    assert '<form method="POST"' in data
+    assert url_for("views.post_home") in data
 
     assert "Card Type" in data
     assert "vCard" in data
@@ -71,7 +70,6 @@ def test_get_home_success(app: Flask, app_client: FlaskClient) -> None:
 
 @pytest.mark.parametrize("card_type", (("vcard", "mecard")))
 def test_get_home_with_params(
-    app: Flask,
     app_client: FlaskClient,
     card_params: dict[str, str],
     card_type: str,
@@ -93,8 +91,85 @@ def test_get_home_with_params(
 
 
 @pytest.mark.parametrize("card_type", (("vcard", "mecard")))
+@pytest.mark.parametrize(
+    ("key", "value"),
+    (
+        ("birthday", "unknown"),
+        ("email", "aaa@bbb"),
+        ("website", "domain.com"),
+        ("picture", "domain.com"),
+    ),
+)
+def test_get_home_with_invalid_params(
+    app_client: FlaskClient,
+    card_params: dict[str, str],
+    card_type: str,
+    key: str,
+    value: str,
+) -> None:
+    card_params[key] = value
+    params = dict(
+        card_type=card_type,
+        **card_params,
+    )
+
+    response = app_client.get("/", query_string=params)
+    assert response.status_code == HTTPStatus.OK
+    assert response.mimetype == "text/html"
+
+    data = response.get_data().decode("utf-8")
+    assert 'class="input is-danger"' in data
+    assert '<p class="help is-danger">' in data
+
+
+@pytest.mark.parametrize("card_type", (("vcard", "mecard")))
+def test_post_home_success(
+    app_client: FlaskClient,
+    card_params: dict[str, str],
+    card_type: str,
+) -> None:
+    params = dict(
+        card_type=card_type,
+        **card_params,
+    )
+
+    response = app_client.post("/", data=params, follow_redirects=False)
+    assert response.status_code == HTTPStatus.FOUND
+    assert response.location.startswith("/card?")
+
+
+@pytest.mark.parametrize("card_type", (("vcard", "mecard")))
+@pytest.mark.parametrize(
+    ("key", "value"),
+    (
+        ("birthday", "unknown"),
+        ("email", "aaa@bbb"),
+        ("website", "domain.com"),
+        ("picture", "domain.com"),
+    ),
+)
+def test_post_home_invalid_parameter(
+    app_client: FlaskClient,
+    card_params: dict[str, str],
+    card_type: str,
+    key: str,
+    value: Any,
+) -> None:
+    card_params[key] = value
+    params = dict(
+        card_type=card_type,
+        **card_params,
+    )
+    response = app_client.post("/", data=params, follow_redirects=True)
+    assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY
+
+    data = response.get_data().decode("utf-8")
+    assert 'class="input is-danger"' in data
+    assert '<p class="help is-danger">' in data
+
+
+@pytest.mark.parametrize("card_type", (("vcard", "mecard")))
 def test_get_card_success(
-    app: Flask,
     app_client: FlaskClient,
     card_params: dict[str, str],
     card_type: str,
@@ -177,18 +252,27 @@ def test_get_vcard_svg_optional_empty_parameter(
     assert response.status_code == HTTPStatus.OK
 
 
+@pytest.mark.parametrize("card_type", ("vcard", "mecard"))
+@pytest.mark.parametrize("card_format", ("svg", "png", "vcf"))
 @pytest.mark.parametrize(
     ("key", "value"),
     (
         ("birthday", "unknown"),
         ("email", "aaa@bbb"),
+        ("website", "domain.com"),
+        ("picture", "domain.com"),
     ),
 )
-def test_get_vcard_svg_invalid_parameter(
-    app_client: FlaskClient, card_params: dict[str, str], key: str, value: Any
+def test_get_card_type_format_invalid_parameter(
+    app_client: FlaskClient,
+    card_params: dict[str, str],
+    card_type: str,
+    card_format: str,
+    key: str,
+    value: Any,
 ) -> None:
     card_params[key] = value
-    response = app_client.get("/vcard.svg", query_string=card_params)
+    response = app_client.get(f"/{card_type}.{card_format}", query_string=card_params)
     assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY
 
 
