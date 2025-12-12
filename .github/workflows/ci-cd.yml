@@ -31,7 +31,7 @@ jobs:
         run: |
           uv run inv qa
       - name: Upload coverage artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: coverage
           path: .coverage
@@ -60,7 +60,7 @@ jobs:
           cache-dependency-glob: "uv.lock"
       - name: Install dependencies
         run: uv sync --all-extras --dev
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v7
         with:
           name: coverage
       - name: Generate Markdown code coverage report
