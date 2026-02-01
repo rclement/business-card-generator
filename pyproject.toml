@@ -10,7 +10,7 @@ dynamic = ["version"]
 requires-python = "==3.13.9"
 dependencies = [
     "flask==3.1.2",
-    "gunicorn==24.1.1",
+    "gunicorn==25.0.0",
     "honcho==2.0.0",
     "jinja2==3.1.6",
     "pydantic[email]==2.12.5",
