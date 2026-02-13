@@ -7,7 +7,7 @@ authors = [
     { name = "Romain Clement", email = "git@romain-clement.net" }
 ]
 dynamic = ["version"]
-requires-python = "==3.14.3"
+requires-python = "==3.14.*"
 dependencies = [
     "flask==3.1.2",
     "gunicorn==25.0.3",

@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Internal
 - Add `uv` lockfile maintenance GitHub Workflow
+- Use native Vercel support for `uv`
+- Relax `uv` Python version patch number to workaround Vercel shenanigans
 
 ## [0.5.1] - 2025-11-06
 ### Fixed
