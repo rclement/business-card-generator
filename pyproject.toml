@@ -37,7 +37,7 @@ dev = [
     "pip-audit==2.10.0",
     "pytest==9.0.2",
     "pytest-cov==7.0.0",
-    "python-dotenv==1.2.1",
+    "python-dotenv==1.2.2",
     "ruff==0.15.4",
 ]
 
