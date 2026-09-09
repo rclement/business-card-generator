@@ -1,5 +1,6 @@
 import json
 import os
+
 import pytest
 
 from business_card_generator import settings

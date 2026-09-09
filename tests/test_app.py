@@ -1,12 +1,11 @@
 import mimetypes
-import pytest
-
 from datetime import date
 from http import HTTPStatus
 from typing import Any
+
+import pytest
 from flask import url_for
 from flask.testing import FlaskClient
-
 
 # ------------------------------------------------------------------------------
 

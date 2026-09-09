@@ -1,6 +1,7 @@
 from datetime import date
 from io import BytesIO
 from typing import Any
+
 from pydantic import BaseModel, EmailStr, HttpUrl, field_validator
 from segno import QRCode, helpers, make_qr
 

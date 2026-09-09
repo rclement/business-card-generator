@@ -1,7 +1,6 @@
 from invoke import task
 from invoke.context import Context
 
-
 app_path = "business_card_generator"
 tests_path = "tests"
 
