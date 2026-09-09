@@ -1,6 +1,6 @@
 import mimetypes
-
 from http import HTTPStatus
+
 from flask import (
     Blueprint,
     Flask,
@@ -19,7 +19,6 @@ from whitenoise import WhiteNoise
 from . import __about__
 from .card import CardParams, MeCard, VCard
 from .settings import Settings
-
 
 # ------------------------------------------------------------------------------
 
@@ -179,11 +178,11 @@ def create_app(env_file: str | None = ".env") -> Flask:
 
     app = Flask(__name__)
     app.config.update(
-        about=dict(
-            name=__about__.__name__,
-            description=__about__.__description__,
-            version=__about__.__version__,
-        ),
+        about={
+            "name": __about__.__name__,
+            "description": __about__.__description__,
+            "version": __about__.__version__,
+        },
     )
     app.debug = settings.app_environment == "development"
     app.testing = settings.app_environment == "testing"
