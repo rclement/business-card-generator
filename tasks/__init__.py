@@ -13,8 +13,8 @@ def format(ctx: Context) -> None:
 @task
 def audit(ctx: Context) -> None:
     ignored_vulns = []
-    options = [f"--ignore-vuln {vuln}" for vuln in ignored_vulns]
-    ctx.run(f"pip-audit {' '.join(options)}", echo=True, pty=True)
+    options = [f"--ignore-until-fixed {vuln}" for vuln in ignored_vulns]
+    ctx.run(f"uv audit --preview-features audit-command {' '.join(options)}", echo=True, pty=True)
 
 
 @task
