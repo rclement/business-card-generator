@@ -1,4 +1,4 @@
-FROM python:3.14.8-slim-trixie AS builder
+FROM python:3.15.0-slim-trixie AS builder
 
 ENV APP_USER=app
 ENV APP_ROOT=/${APP_USER}
@@ -13,7 +13,7 @@ RUN uv sync --locked --no-dev --no-cache --no-install-project --no-editable
 COPY . ./
 RUN uv sync --locked --no-dev --no-editable
 
-FROM python:3.14.8-slim-trixie AS final
+FROM python:3.15.0-slim-trixie AS final
 
 ENV APP_USER=app
 ENV APP_GROUP=app
