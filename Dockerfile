@@ -1,14 +1,9 @@
-ARG PYTHON_VERSION=3.14.8
-ARG UV_VERSION=0.13.0
-
-FROM ghcr.io/astral-sh/uv:${UV_VERSION} AS uv
-
-FROM python:${PYTHON_VERSION}-slim-trixie AS builder
+FROM python:3.14.8-slim-trixie AS builder
 
 ENV APP_USER=app
 ENV APP_ROOT=/${APP_USER}
 
-COPY --from=uv /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.13.0 /uv /uvx /bin/
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy UV_PYTHON_DOWNLOADS=0
 
 RUN mkdir -p ${APP_ROOT}
@@ -18,7 +13,7 @@ RUN uv sync --locked --no-dev --no-cache --no-install-project --no-editable
 COPY . ./
 RUN uv sync --locked --no-dev --no-editable
 
-FROM python:${PYTHON_VERSION}-slim-trixie AS final
+FROM python:3.14.8-slim-trixie AS final
 
 ENV APP_USER=app
 ENV APP_GROUP=app
