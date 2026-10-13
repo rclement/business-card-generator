@@ -1,0 +1,8 @@
+*
+!business_card_generator
+!LICENSE
+!Procfile
+!README.md
+!pyproject.toml
+!uv.lock
+**/__pycache__

@@ -1,8 +1,12 @@
 {
-  "builds": [
-    { "src": "business_card_generator/wsgi.py", "use": "@vercel/python" }
-  ],
-  "routes": [
-    { "src": "(.*)", "dest": "business_card_generator/wsgi.py"}
-  ]
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "fluid": true,
+  "services": {
+    "web": {
+      "runtime": "container",
+      "root": ".",
+      "entrypoint": "Dockerfile.vercel"
+    }
+  },
+  "rewrites": [{ "source": "/(.*)", "destination": { "service": "web" } }]
 }

@@ -1,7 +1,3 @@
 /*
-!business_card_generator
-!LICENSE
-!README.md
-!pyproject.toml
-!uv.lock
+!Dockerfile.vercel
 !vercel.json
