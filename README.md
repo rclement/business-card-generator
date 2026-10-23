@@ -1,7 +1,5 @@
 ![Banner QR Card](https://business-card-generator.vercel.app/vcard.svg?firstname=Romain&lastname=Clement&picture=https%3A%2F%2Fromain-clement.net%2Fstatic%2Ficon.png&company=Freelance&job=Software+|+Data+|+AI&email=contact%2Bgithub%40romain-clement.net&phone=&website=https%3A%2F%2Fromain-clement.net)
 
-[![Deploy to Railyard](https://app.railyard.run/deploy/badge)](https://app.railyard.run/deploy?repo=https://github.com/rclement/business-card-generator)
-
 # Business Card Generator
 
 [![CI/CD](https://github.com/rclement/business-card-generator/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/rclement/business-card-generator/actions/workflows/ci-cd.yml)
@@ -63,6 +61,7 @@ If you do not trust the official deployment, feel free to deploy your own!
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/rclement/business-card-generator)
 [![Deploy with Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/rclement/business-card-generator)
+[![Deploy to Railyard](https://app.railyard.run/deploy/badge)](https://app.railyard.run/deploy?repo=https://github.com/rclement/business-card-generator)
 
 ## Development
 
