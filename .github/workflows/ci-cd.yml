@@ -194,7 +194,7 @@ jobs:
         if: ${{ !contains(github.ref, 'tags') }}
         run: echo "DEPLOYMENT_URL=https://${BRANCH_NAME_SLUG}-${BASE_URL_PREVIEW}" >> $GITHUB_ENV
       - name: Set production deployment url variable
-        if: contains(github.ref, 'tags')
+        if: ${{ contains(github.ref, 'tags') }}
         run: echo "DEPLOYMENT_URL=https://${BASE_URL_PRODUCTION}" >> $GITHUB_ENV
       - id: output_step
         run: |
