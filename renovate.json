@@ -1,11 +1,67 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
+    "config:recommended",
     ":preserveSemverRanges",
-    ":disableDependencyDashboard"
+    ":disableDependencyDashboard",
+    "helpers:pinGitHubActionDigests"
   ],
   "rangeStrategy": "bump",
   "labels": ["dependencies"],
-  "assignees": ["rclement"],
-  "reviewers": ["rclement"]
+  "minimumReleaseAge": "3 days",
+  "platformAutomerge": true,
+  "automergeType": "pr",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"],
+    "automerge": true
+  },
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "minimumReleaseAge": null,
+    "automerge": true
+  },
+  "packageRules": [
+    {
+      "description": "Dev tooling: automerge minor and patch updates",
+      "matchDepTypes": ["dependency-groups"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "dev tools",
+      "automerge": true
+    },
+    {
+      "description": "Runtime dependencies: automerge minor and patch updates (gated by CI and preview E2E)",
+      "matchDepTypes": ["dependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "description": "GitHub Actions: automerge minor, patch and digest updates",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch", "digest", "pin", "pinDigest"],
+      "groupName": "github actions",
+      "automerge": true
+    },
+    {
+      "description": "Docker base images and uv: automerge patch updates only",
+      "matchManagers": ["dockerfile"],
+      "matchUpdateTypes": ["patch", "digest"],
+      "automerge": true
+    },
+    {
+      "description": "Python minor and major, and any major update: review manually",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "assignees": ["rclement"],
+      "reviewers": ["rclement"]
+    },
+    {
+      "description": "Python minor bumps change the runtime: review manually",
+      "matchPackageNames": ["python"],
+      "matchUpdateTypes": ["minor"],
+      "automerge": false,
+      "assignees": ["rclement"],
+      "reviewers": ["rclement"]
+    }
+  ]
 }

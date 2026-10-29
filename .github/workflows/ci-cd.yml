@@ -8,6 +8,9 @@ on:
       - "*"
   pull_request:
   workflow_dispatch:
+  schedule:
+    # nightly run to catch new advisories on dependencies already merged
+    - cron: "17 4 * * *"
 
 env:
   BASE_URL_PREVIEW: bcardgen.vercel.app
@@ -126,6 +129,7 @@ jobs:
     name: Docker image
     runs-on: ubuntu-latest
     needs: test
+    if: ${{ github.event_name != 'schedule' }}
     permissions:
       contents: read
       packages: write
@@ -148,12 +152,7 @@ jobs:
       - name: Smoke test image
         run: |
           docker run -d --name bcg -p 8080:80 -e FORCE_HTTPS=false ${IMAGE_NAME}:ci
-          for i in $(seq 1 15); do
-            curl -fsS -o /dev/null http://localhost:8080/ && exit 0
-            sleep 1
-          done
-          docker logs bcg
-          exit 1
+          python3 e2e/smoke.py http://localhost:8080 || { docker logs bcg; exit 1; }
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v4
         with:
@@ -174,6 +173,7 @@ jobs:
     name: Deployment setup
     runs-on: ubuntu-latest
     needs: test
+    if: ${{ github.event_name != 'schedule' }}
 
     outputs:
       branch_name_slug: ${{ steps.output_step.outputs.branch_name_slug }}
@@ -203,7 +203,7 @@ jobs:
     name: Vercel preview deployment
     runs-on: ubuntu-latest
     needs: [deploy-vercel-setup, docker]
-    if: ${{ !contains(github.ref, 'tags') }}
+    if: ${{ github.event_name != 'schedule' && !contains(github.ref, 'tags') }}
     environment:
       name: preview/${{ needs.deploy-vercel-setup.outputs.branch_name_slug }}
       url: ${{ needs.deploy-vercel-setup.outputs.deployment_url }}
@@ -227,11 +227,25 @@ jobs:
           VERCEL_URL=$(vercel deploy --yes --token $VERCEL_TOKEN)
           vercel alias --token $VERCEL_TOKEN set $VERCEL_URL $VERCEL_ALIAS
 
+  e2e-preview:
+    name: Preview E2E tests
+    runs-on: ubuntu-latest
+    needs: [deploy-vercel-setup, deploy-vercel-preview]
+    if: ${{ github.event_name != 'schedule' && !contains(github.ref, 'tags') }}
+    env:
+      DEPLOYMENT_URL: ${{ needs.deploy-vercel-setup.outputs.deployment_url }}
+      VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+
+    steps:
+      - uses: actions/checkout@v7
+      - name: Run E2E smoke tests against preview deployment
+        run: python3 e2e/smoke.py "${DEPLOYMENT_URL}"
+
   deploy-vercel-production:
     name: Vercel production deployment
     runs-on: ubuntu-latest
     needs: [deploy-vercel-setup, docker]
-    if: contains(github.ref, 'tags')
+    if: ${{ github.event_name != 'schedule' && contains(github.ref, 'tags') }}
 
     environment:
       name: production
