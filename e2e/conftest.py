@@ -24,23 +24,23 @@ def base_url(request: pytest.FixtureRequest) -> str:
 
 @pytest.fixture(scope="session")
 def client(base_url: str) -> Iterator[httpx2.Client]:
-    headers = {"User-Agent": "bcg-e2e"}
-    # Only needed when the target is behind Vercel deployment protection
-    bypass = os.environ.get("VERCEL_AUTOMATION_BYPASS_SECRET")
-    if bypass:
-        headers["x-vercel-protection-bypass"] = bypass
-
     with httpx2.Client(
-        base_url=base_url, headers=headers, timeout=30, follow_redirects=False
+        base_url=base_url,
+        headers={"User-Agent": "bcg-e2e"},
+        timeout=30,
+        follow_redirects=False,
     ) as http:
         # wait for the deployment (or alias) to serve the app
+        last: str = "no response"
         for _ in range(30):
             try:
-                if http.get("/", follow_redirects=True).status_code == 200:
+                status = http.get("/", follow_redirects=True).status_code
+                if status == 200:
                     break
-            except httpx2.TransportError:
-                pass
+                last = f"HTTP {status}"
+            except httpx2.TransportError as exc:
+                last = repr(exc)
             time.sleep(5)
         else:
-            pytest.exit(f"{base_url} is not ready", returncode=2)
+            pytest.exit(f"{base_url} is not ready (last: {last})", returncode=2)
         yield http

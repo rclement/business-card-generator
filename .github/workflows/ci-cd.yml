@@ -236,7 +236,6 @@ jobs:
     if: ${{ !contains(github.ref, 'tags') }}
     env:
       DEPLOYMENT_URL: ${{ needs.deploy-vercel-setup.outputs.deployment_url }}
-      VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
 
     steps:
       - uses: actions/checkout@v7
