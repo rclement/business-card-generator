@@ -43,6 +43,3 @@ dev = [
 
 [tool.hatch.version]
 path = "business_card_generator/__about__.py"
-
-[tool.pytest.ini_options]
-markers = ["e2e: end-to-end tests run against a deployed instance (see e2e/)"]

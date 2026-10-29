@@ -19,8 +19,6 @@ CARD_FORMATS = [
     ("vcf", "text/", b""),
 ]
 
-pytestmark = pytest.mark.e2e
-
 
 def test_home(client: httpx2.Client) -> None:
     response = client.get("/")
