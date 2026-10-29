@@ -155,7 +155,7 @@ jobs:
       - name: Smoke test image
         run: |
           docker run -d --name bcg -p 8080:80 -e FORCE_HTTPS=false ${IMAGE_NAME}:ci
-          uv run pytest -v e2e --base-url=http://localhost:8080 || { docker logs bcg; exit 1; }
+          uv run inv e2e --base-url=http://localhost:8080 || { docker logs bcg; exit 1; }
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v4
         with:
@@ -248,7 +248,7 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-extras --dev
       - name: Run E2E tests against preview deployment
-        run: uv run pytest -v e2e --base-url="${DEPLOYMENT_URL}"
+        run: uv run inv e2e --base-url="${DEPLOYMENT_URL}"
 
   deploy-vercel-production:
     name: Vercel production deployment
