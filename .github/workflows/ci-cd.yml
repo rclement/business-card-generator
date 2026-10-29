@@ -20,9 +20,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Install uv
-        uses: astral-sh/setup-uv@v10.3.0
+        uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
         with:
           enable-cache: true
           cache-dependency-glob: "uv.lock"
@@ -32,7 +32,7 @@ jobs:
         run: |
           uv run inv qa
       - name: Upload coverage artifacts
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: coverage
           path: .coverage
@@ -50,18 +50,18 @@ jobs:
       CODECOV_MD_FILE: "coverage.md"
       CODECOV_REPORT_TITLE: "Code coverage report"
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: main
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Install uv
-        uses: astral-sh/setup-uv@v10.3.0
+        uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
         with:
           enable-cache: true
           cache-dependency-glob: "uv.lock"
       - name: Install dependencies
         run: uv sync --all-extras --dev
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: coverage
       - name: Generate Markdown code coverage report
@@ -80,7 +80,7 @@ jobs:
       - name: Export code coverage report to job summary
         run: cat "${CODECOV_MD_FILE}" >> "${GITHUB_STEP_SUMMARY}"
       - name: Add or update code coverage comment to pull request
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         if: ${{ github.event_name == 'pull_request' }}
         with:
           script: |
@@ -134,18 +134,18 @@ jobs:
       image: ${{ env.IMAGE_NAME }}@${{ steps.push.outputs.digest }}
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Install uv
-        uses: astral-sh/setup-uv@v10.3.0
+        uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
         with:
           enable-cache: true
           cache-dependency-glob: "uv.lock"
       - name: Install dependencies
         run: uv sync --all-extras --dev
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4
       - name: Build image
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7
         with:
           context: .
           load: true
@@ -157,14 +157,14 @@ jobs:
           docker run -d --name bcg -p 8080:80 -e FORCE_HTTPS=false ${IMAGE_NAME}:ci
           uv run inv e2e --base-url=http://localhost:8080 || { docker logs bcg; exit 1; }
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v4
+        uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Push image
         id: push
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7
         with:
           context: .
           push: true
@@ -183,7 +183,7 @@ jobs:
 
     steps:
       - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v5
+        uses: rlespinasse/github-slug-action@0e3299190dac9a700da92a90de4556116ea965ed # v5
       - name: Get current branch name slug
         # retrieving the branch name depends on the event type:
         # - pull_request events: GITHUB_HEAD_REF_SLUG_URL
@@ -218,7 +218,7 @@ jobs:
       DOCKER_IMAGE: ${{ needs.docker.outputs.image }}
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Generate Dockerfile.vercel from the CI-built image
         run: echo "FROM ${DOCKER_IMAGE}" > Dockerfile.vercel
       - name: Install Vercel CLI
@@ -238,9 +238,9 @@ jobs:
       DEPLOYMENT_URL: ${{ needs.deploy-vercel-setup.outputs.deployment_url }}
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Install uv
-        uses: astral-sh/setup-uv@v10.3.0
+        uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
         with:
           enable-cache: true
           cache-dependency-glob: "uv.lock"
@@ -266,7 +266,7 @@ jobs:
       DOCKER_IMAGE: ${{ needs.docker.outputs.image }}
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Generate Dockerfile.vercel from the CI-built image
         run: echo "FROM ${DOCKER_IMAGE}" > Dockerfile.vercel
       - name: Install Vercel CLI
