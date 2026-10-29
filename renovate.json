@@ -30,7 +30,7 @@
   },
   "packageRules": [
     {
-      "description": "Python dependencies (runtime and dev): group and automerge minor and patch updates, gated by CI and preview E2E",
+      "description": "Python dependencies automerge (minor, patch)",
       "matchManagers": [
         "pep621"
       ],
@@ -46,7 +46,7 @@
       "automerge": true
     },
     {
-      "description": "GitHub Actions: automerge minor, patch and digest updates",
+      "description": "GitHub Actions automerge (minor, patch, digest)",
       "matchManagers": [
         "github-actions"
       ],
@@ -61,7 +61,7 @@
       "automerge": true
     },
     {
-      "description": "Docker base images and uv: automerge patch updates only (uv is 0.x, minor bumps can break)",
+      "description": "Docker images automerge (patch)",
       "matchManagers": [
         "dockerfile"
       ],
@@ -72,7 +72,7 @@
       "automerge": true
     },
     {
-      "description": "Python itself: minor and patch updates are backwards compatible, automerge",
+      "description": "Python version automerge (minor, patch)",
       "matchPackageNames": [
         "python"
       ],
@@ -83,7 +83,7 @@
       "automerge": true
     },
     {
-      "description": "Major updates (including Python): review manually",
+      "description": "Major updates require manual review",
       "matchUpdateTypes": [
         "major"
       ],
