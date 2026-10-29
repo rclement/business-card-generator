@@ -32,6 +32,7 @@ Changelog = "https://github.com/rclement/business-card-generator/blob/main/CHANG
 dev = [
     "bandit==1.9.4",
     "faker==40.43.0",
+    "httpx==0.28.1",
     "invoke==3.0.3",
     "mypy==2.4.0",
     "pytest==9.2.0",
@@ -42,3 +43,6 @@ dev = [
 
 [tool.hatch.version]
 path = "business_card_generator/__about__.py"
+
+[tool.pytest.ini_options]
+markers = ["e2e: end-to-end tests run against a deployed instance (see e2e/)"]

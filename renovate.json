@@ -7,62 +7,93 @@
     "helpers:pinGitHubActionDigests"
   ],
   "rangeStrategy": "bump",
-  "labels": ["dependencies"],
+  "labels": [
+    "dependencies"
+  ],
   "minimumReleaseAge": "3 days",
   "platformAutomerge": true,
   "automergeType": "pr",
   "automergeStrategy": "rebase",
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": ["before 6am on monday"],
+    "schedule": [
+      "before 6am on monday"
+    ],
     "automerge": true
   },
   "vulnerabilityAlerts": {
-    "labels": ["security"],
+    "labels": [
+      "security"
+    ],
     "minimumReleaseAge": null,
     "automerge": true
   },
   "packageRules": [
     {
-      "description": "Dev tooling: automerge minor and patch updates",
-      "matchDepTypes": ["dependency-groups"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "groupName": "dev tools",
-      "automerge": true
-    },
-    {
-      "description": "Runtime dependencies: automerge minor and patch updates (gated by CI and preview E2E)",
-      "matchDepTypes": ["dependencies"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "description": "Python dependencies (runtime and dev): group and automerge minor and patch updates, gated by CI and preview E2E",
+      "matchManagers": [
+        "pep621"
+      ],
+      "matchDepTypes": [
+        "dependencies",
+        "dependency-groups"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "python dependencies",
       "automerge": true
     },
     {
       "description": "GitHub Actions: automerge minor, patch and digest updates",
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor", "patch", "digest", "pin", "pinDigest"],
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest",
+        "pin",
+        "pinDigest"
+      ],
       "groupName": "github actions",
       "automerge": true
     },
     {
-      "description": "Docker base images and uv: automerge patch updates only",
-      "matchManagers": ["dockerfile"],
-      "matchUpdateTypes": ["patch", "digest"],
+      "description": "Docker base images and uv: automerge patch updates only (uv is 0.x, minor bumps can break)",
+      "matchManagers": [
+        "dockerfile"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "digest"
+      ],
       "automerge": true
     },
     {
-      "description": "Python minor and major, and any major update: review manually",
-      "matchUpdateTypes": ["major"],
-      "automerge": false,
-      "assignees": ["rclement"],
-      "reviewers": ["rclement"]
+      "description": "Python itself: minor and patch updates are backwards compatible, automerge",
+      "matchPackageNames": [
+        "python"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true
     },
     {
-      "description": "Python minor bumps change the runtime: review manually",
-      "matchPackageNames": ["python"],
-      "matchUpdateTypes": ["minor"],
+      "description": "Major updates (including Python): review manually",
+      "matchUpdateTypes": [
+        "major"
+      ],
       "automerge": false,
-      "assignees": ["rclement"],
-      "reviewers": ["rclement"]
+      "assignees": [
+        "rclement"
+      ],
+      "reviewers": [
+        "rclement"
+      ]
     }
   ]
 }

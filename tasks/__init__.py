@@ -14,7 +14,11 @@ def format(ctx: Context) -> None:
 def audit(ctx: Context) -> None:
     ignored_vulns = []
     options = [f"--ignore-until-fixed {vuln}" for vuln in ignored_vulns]
-    ctx.run(f"uv audit --preview-features audit-command {' '.join(options)}", echo=True, pty=True)
+    ctx.run(
+        f"uv audit --preview-features audit-command {' '.join(options)}",
+        echo=True,
+        pty=True,
+    )
 
 
 @task
@@ -39,6 +43,11 @@ def test(ctx: Context):
         echo=True,
         pty=True,
     )
+
+
+@task
+def e2e(ctx: Context, base_url: str) -> None:
+    ctx.run(f"py.test -v e2e --base-url={base_url}", echo=True, pty=True)
 
 
 @task(audit, lint, static_check, security_check, test)
