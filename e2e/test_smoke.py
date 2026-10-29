@@ -1,7 +1,7 @@
 import re
 from http import HTTPStatus
 
-import httpx
+import httpx2
 import pytest
 
 CARD_TYPES = ["vcard", "mecard"]
@@ -22,21 +22,21 @@ CARD_FORMATS = [
 pytestmark = pytest.mark.e2e
 
 
-def test_home(client: httpx.Client) -> None:
+def test_home(client: httpx2.Client) -> None:
     response = client.get("/")
     assert response.status_code == HTTPStatus.OK
     assert "text/html" in response.headers["content-type"]
     assert "<form" in response.text
 
 
-def test_static_assets(client: httpx.Client) -> None:
+def test_static_assets(client: httpx2.Client) -> None:
     match = re.search(r'(?:href|src)="(/static/[^"]+)"', client.get("/").text)
     assert match
     assert client.get(match.group(1)).status_code == HTTPStatus.OK
 
 
 @pytest.mark.parametrize("card_type", CARD_TYPES)
-def test_form_flow(client: httpx.Client, card_type: str) -> None:
+def test_form_flow(client: httpx2.Client, card_type: str) -> None:
     response = client.post("/", data={"card_type": card_type, **CARD_PARAMS})
     assert response.status_code == HTTPStatus.FOUND
 
@@ -45,7 +45,7 @@ def test_form_flow(client: httpx.Client, card_type: str) -> None:
     assert client.get(location).status_code == HTTPStatus.OK
 
 
-def test_form_validation(client: httpx.Client) -> None:
+def test_form_validation(client: httpx2.Client) -> None:
     response = client.post("/", data={"card_type": "vcard", "firstname": "Ada"})
     assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY
 
@@ -53,7 +53,7 @@ def test_form_validation(client: httpx.Client) -> None:
 @pytest.mark.parametrize("card_type", CARD_TYPES)
 @pytest.mark.parametrize(("card_format", "content_type", "prefix"), CARD_FORMATS)
 def test_card_output(
-    client: httpx.Client,
+    client: httpx2.Client,
     card_type: str,
     card_format: str,
     content_type: str,
@@ -70,7 +70,7 @@ def test_card_output(
 @pytest.mark.parametrize("card_type", CARD_TYPES)
 @pytest.mark.parametrize("card_format", [f for f, _, _ in CARD_FORMATS])
 def test_card_output_invalid(
-    client: httpx.Client, card_type: str, card_format: str
+    client: httpx2.Client, card_type: str, card_format: str
 ) -> None:
     response = client.get(f"/{card_type}.{card_format}", params={"firstname": "Ada"})
     assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY
